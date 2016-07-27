@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify app/index.js -o bundle.js -t babelify"
+    "build": "browserify app/index.js -o public/js/bundle.js -t babelify",
+    "watch": "watchify app/index.js -o public/js/bundle.js -t babelify",
+    "liveServer": "watchify app/index.js -o public/js/bundle.js -t babelify",
+    "serve": "concurrently 'npm run watch' 'live-server public'"
   },
   "repository": {
     "type": "git",
@@ -23,7 +26,9 @@
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "concurrently": "^2.2.0",
     "immutable": "^3.8.1",
+    "live-server": "^1.0.0",
     "react": "^15.2.1",
     "react-bootstrap": "^0.29.5",
     "react-dom": "^15.2.1",
