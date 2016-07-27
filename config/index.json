@@ -1,6 +1,5 @@
 {
  "vk": {
-   "url": "https://api.vk.com/",
-   ""
+   "api": "https://api.vk.com/"
  }
 }

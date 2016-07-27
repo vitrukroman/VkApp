@@ -1,0 +1,8 @@
+{
+  "spec_dir": "app",
+  "spec_files": [
+    "**/*_tests.js"
+  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}

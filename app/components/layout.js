@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Grid, Col, Row} from 'react-bootstrap';
+import {Grid, Col, Row, Image} from 'react-bootstrap';
 
 
 const Layout = () => {
@@ -7,7 +7,9 @@ const Layout = () => {
     <Grid>
       <Row>
         <Col md={3}>
-          <Row>Photo</Row>
+          <Row>
+            <Image src="http://cs631329.vk.me/v631329286/23f6d/yV0LrfbdgWk.jpg" rounded />
+          </Row>
           <Row>Menu</Row>
         </Col>
 
