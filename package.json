@@ -6,15 +6,15 @@
   "scripts": {
     "build": "browserify app/index.js -o public/js/bundle.js -t babelify",
     "watch": "watchify app/index.js -o public/js/bundle.js -t babelify",
-    "liveServer": "watchify app/index.js -o public/js/bundle.js -t babelify",
-    "serve": "concurrently -p none 'npm run watch' 'live-server public'",
+    "liveServer": "live-server public",
+    "serve": "concurrently -p none 'npm run watch' 'npm run liveServer'",
     "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alerd/VkApp.git"
   },
-  "author": "",
+  "author": "Roman Vitruk",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alerd/VkApp/issues"
@@ -36,6 +36,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-immutable": "^3.0.6",
+    "redux-saga": "^0.11.0",
     "request-promise": "^4.0.2",
     "watchify": "^3.7.0"
   }
