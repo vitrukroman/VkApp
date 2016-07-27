@@ -1,14 +1,13 @@
 import React, {PropTypes} from 'react'
-import {Button, Panel} from 'react-bootstrap';
+import {Panel} from 'react-bootstrap';
+import Layout from './layout';
 
 
 const App = ({onClick, clicks}) => {
     return (
-        <Panel header={`clicks: ${clicks}`}>
-            <Button bsStyle="danger" onClick={onClick}> Success </Button>
-        </Panel>
+      <Layout></Layout>
     );
-}
+};
 
 
 
