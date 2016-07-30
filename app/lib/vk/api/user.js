@@ -1,7 +1,7 @@
 'use strict';
 
-const rp = require('request-promise');
-const config = require('../../../../config');
+import rp from 'request-promise';
+import config from '../../../../config';
 
 
 /**
@@ -16,20 +16,14 @@ const build_get_request = (apiMethod, query_params) => {
     baseUrl: config.vk.api,
     uri: `method/${apiMethod}`,
     qs: query_params,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+    },
     json: true
   };
 };
 
-
-
 const get = query_params => rp(build_get_request('users.get', query_params));
 
-
-const user_ids = 210700286,
-  fields = ['photo_50', 'sex'],
-  query_params = {user_ids, fields};
-
-get(query_params).then(data => console.log(data)).error(err => console.error(err));
-
-
-module.exports = {build_get_request};
+export default {build_get_request, get};

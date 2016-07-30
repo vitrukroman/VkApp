@@ -3,14 +3,12 @@ import {
 } from 'redux-immutable';
 
 
-const clicks = (state, action) => {
+const user = (state, action) => {
     switch (action.type) {
-        case 'INCREMENT':
-            return ++state;
-        case 'DECREMENT':
-            return --state;
+        case 'GET_USER_RESOLVED':
+            return action.user;
         default:
             return state;
     }
 };
-export default combineReducers({clicks});
+export default combineReducers({user});

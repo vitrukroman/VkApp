@@ -1,24 +1,13 @@
-import React, {PropTypes} from 'react'
-import {Panel} from 'react-bootstrap';
-import Layout from './layout';
+import LayoutContainer from '../containers/layout_container';
+import React from 'react';
 
-
-const App = ({onClick, clicks}) => {
+const App = () => {
     return (
-      <Layout></Layout>
+      <LayoutContainer></LayoutContainer>
     );
 };
 
-
-
-
-
-App.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    clicks: PropTypes.number.isRequired
-};
-
-export default App
+export default App;
 
 
 

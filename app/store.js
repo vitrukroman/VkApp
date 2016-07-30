@@ -6,7 +6,7 @@ import {Map} from 'immutable';
 
 
 const sagaMiddleWare = createSagaMiddleware();
-const store = createStore(VkApp, Map({clicks: 0}), applyMiddleware(sagaMiddleWare));
+const store = createStore(VkApp, Map({user: null}), applyMiddleware(sagaMiddleWare));
 sagaMiddleWare.run(sagas);
 
 export default store;
