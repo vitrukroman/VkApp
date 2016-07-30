@@ -7,14 +7,15 @@ import Layout from '../components/layout';
 const LayoutContainer = connect(
   state => {
     return {
-      user: state.get('user')
+      photo_url: state.get('photo_url'),
+      user: state.get('user'),
     };
   },
   dispatch => {
     return {
       get_user() {
         const user_ids = 210700286,
-          fields = ['photo_50', 'sex'],
+          fields = ['photo_100', 'sex'],
           query_params = {user_ids, fields};
 
         dispatch({type: 'GET_USER', query_params});

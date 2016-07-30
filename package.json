@@ -7,7 +7,7 @@
     "build": "browserify app/index.js -o public/js/bundle.js -t babelify",
     "watch": "watchify app/index.js -o public/js/bundle.js -t babelify",
     "liveServer": "live-server public",
-    "serve": "concurrently -p none 'npm run watch' 'npm run liveServer'",
+    "serve": "concurrently -p none 'npm run watch' 'npm run liveServer' 'corsproxy'",
     "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
   },
   "repository": {
@@ -28,6 +28,7 @@
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
     "concurrently": "^2.2.0",
+    "corsproxy": "^1.4.0",
     "immutable": "^3.8.1",
     "jasmine": "^2.4.1",
     "live-server": "^1.0.0",
@@ -35,8 +36,9 @@
     "react-bootstrap": "^0.29.5",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
+    "react-router": "^2.6.1",
+    "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
-    "redux-immutable": "^3.0.6",
     "redux-saga": "^0.11.0",
     "request-promise": "^4.0.2",
     "watchify": "^3.7.0"

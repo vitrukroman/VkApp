@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import {Grid, Col, Row, Image} from 'react-bootstrap';
+import {Grid, Col, Row, Image, Nav, NavItem} from 'react-bootstrap';
 
 
 class Layout extends Component {
@@ -8,16 +8,19 @@ class Layout extends Component {
   }
 
   render() {
-    console.log(this.props.user);
-
     return (
       <Grid>
         <Row>
           <Col md={3}>
             <Row>
-              <Image src="http://cs631329.vk.me/v631329286/23f6d/yV0LrfbdgWk.jpg" rounded/>
+              <Image src={this.props.photo_url} rounded/>
             </Row>
-            <Row>Menu</Row>
+            <Row>
+              <Nav bsStyle="pills" stacked activeKey={1}>
+                <NavItem eventKey={1} href="/home">Домашня сторінка</NavItem>
+                <NavItem eventKey={2} title="Item">Пошук</NavItem>
+              </Nav>
+            </Row>
           </Col>
 
           <Col md={9}>

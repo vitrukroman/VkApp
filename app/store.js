@@ -6,7 +6,14 @@ import {Map} from 'immutable';
 
 
 const sagaMiddleWare = createSagaMiddleware();
-const store = createStore(VkApp, Map({user: null}), applyMiddleware(sagaMiddleWare));
+const store = createStore(VkApp, Map({
+  user: null,
+  photo_url: '/images/photo_spinner.gif'
+}), applyMiddleware(sagaMiddleWare));
 sagaMiddleWare.run(sagas);
+
+
+
+
 
 export default store;
