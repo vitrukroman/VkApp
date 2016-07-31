@@ -2,7 +2,7 @@
 
 import {takeEvery} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
-import {get as getUser} from './lib/vk/api/user';
+import {get as getUser} from '../lib/vk/api/user';
 import 'babel-polyfill';
 
 function* get_user(action) {
@@ -19,4 +19,6 @@ function* saga() {
   yield takeEvery('GET_USER', get_user);
 }
 
+
+export {get_user};
 export default saga;
