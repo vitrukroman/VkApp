@@ -33,7 +33,6 @@
     "karma": "^1.1.2",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-browserify": "^5.1.0",
-    "karma-chrome-launcher": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.1",
     "live-server": "^1.0.0",
