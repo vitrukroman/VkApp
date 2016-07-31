@@ -1,7 +1,7 @@
 'use strict';
 
-const {build_get_request} = require('../user');
-const {vk: {api: vk_api}} = require('../../../../../config');
+import {build_get_request} from '../user';
+import {vk} from '../../../../../config';
 
 describe('build_get_request', () => {
   it('builds user get request by id and fields', () => {
@@ -13,8 +13,7 @@ describe('build_get_request', () => {
     const build_request = build_get_request('get', query_params);
 
     expect(build_request).toEqual({
-      method: 'GET',
-      baseUrl: vk_api,
+      baseUrl: vk.api,
       uri: `method/${apiMethod}`,
       qs: query_params,
       json: true

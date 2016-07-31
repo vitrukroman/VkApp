@@ -3,7 +3,6 @@
 import rp from 'request-promise';
 import config from '../../../../config';
 
-window.rp = rp;
 /**
  * Builds GET request to VK api
  * @param {string} apiMethod
@@ -21,4 +20,4 @@ const build_get_request = (apiMethod, query_params) => {
 
 const get = query_params => rp.get(build_get_request('users.get', query_params));
 
-export default {build_get_request, get};
+export {build_get_request, get};

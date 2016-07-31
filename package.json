@@ -8,7 +8,7 @@
     "watch": "watchify app/index.js -o public/js/bundle.js -t babelify",
     "liveServer": "live-server public",
     "serve": "concurrently -p none 'npm run watch' 'npm run liveServer' 'corsproxy'",
-    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
+    "test": "karma start --single-run"
   },
   "repository": {
     "type": "git",
@@ -29,8 +29,13 @@
     "browserify": "^13.0.1",
     "concurrently": "^2.2.0",
     "corsproxy": "^1.4.0",
-    "immutable": "^3.8.1",
     "jasmine": "^2.4.1",
+    "karma": "^1.1.2",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-browserify": "^5.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.1",
     "live-server": "^1.0.0",
     "react": "^15.2.1",
     "react-bootstrap": "^0.29.5",

@@ -1,8 +1,8 @@
-import Immutable from 'immutable';
 import {routerReducer} from 'react-router-redux';
 import {combineReducers} from 'redux';
 
 
+/*
 const user = (state, action) => {
   switch (action.type) {
     case 'GET_USER_RESOLVED':
@@ -11,9 +11,10 @@ const user = (state, action) => {
       return state;
   }
 };
+*/
 
 
-const photo_url = (state, action) => {
+const photo_url = (state = '/images/photo_spinner.gif', action) => {
   switch (action.type) {
     case 'GET_USER_RESOLVED':
       return action.user.response[0].photo_100;
@@ -22,4 +23,4 @@ const photo_url = (state, action) => {
   }
 };
 
-export default combineReducers({user, photo_url, routing: routerReducer});
+export default combineReducers({photo_url, routing: routerReducer});

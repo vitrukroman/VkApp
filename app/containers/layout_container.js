@@ -7,8 +7,7 @@ import Layout from '../components/layout';
 const LayoutContainer = connect(
   state => {
     return {
-      photo_url: state.get('photo_url'),
-      user: state.get('user'),
+      photo_url: state.photo_url
     };
   },
   dispatch => {
