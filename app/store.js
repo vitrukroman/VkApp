@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import VkApp from './reducers';
+import VkApp from './reducers/reducers';
 import sagas from './sagas/sagas';
 
 

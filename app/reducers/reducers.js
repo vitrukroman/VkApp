@@ -1,6 +1,6 @@
 import {routerReducer} from 'react-router-redux';
 import {combineReducers} from 'redux';
-import actions from './actions';
+import actions from '../actions';
 
 
 /*
