@@ -1,11 +1,15 @@
 import LayoutContainer from '../containers/layout_container';
-import React from 'react';
+import React, {Component} from 'react';
 
-const App = () => {
+
+class App extends Component {
+  render() {
     return (
-      <LayoutContainer></LayoutContainer>
+      <LayoutContainer children={this.props.children}></LayoutContainer>
     );
-};
+  }
+}
+
 
 export default App;
 

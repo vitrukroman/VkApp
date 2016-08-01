@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Grid, Col, Row, Image, Nav, NavItem} from 'react-bootstrap';
-
+import {IndexLinkContainer} from 'react-router-bootstrap';
 
 class Layout extends Component {
   componentDidMount() {
@@ -17,20 +17,26 @@ class Layout extends Component {
             </Row>
             <Row>
               <Nav bsStyle="pills" stacked activeKey={1}>
-                <NavItem eventKey={1} href="/home">Домашня сторінка</NavItem>
-                <NavItem eventKey={2} title="Item">Пошук</NavItem>
+                <IndexLinkContainer to="/">
+                  <NavItem>Домашня сторінка</NavItem>
+                </IndexLinkContainer>
+
+                <IndexLinkContainer to="/search">
+                  <NavItem>Пошук</NavItem>
+                </IndexLinkContainer>
               </Nav>
             </Row>
           </Col>
 
           <Col md={9}>
-            Content
+            {this.props.children}
           </Col>
         </Row>
       </Grid>
     );
   }
-};
+}
+;
 
 export default Layout;
 

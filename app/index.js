@@ -5,7 +5,7 @@ import store from './store';
 import App from './components/app'
 import {Router, Route, browserHistory} from 'react-router';
 import {syncHistoryWithStore} from 'react-router-redux';
-
+import Search from './components/search';
 
 
 const history = syncHistoryWithStore(browserHistory, store);
@@ -15,7 +15,7 @@ render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-
+        <Route path="/search" component={Search}/>
       </Route>
     </Router>
   </Provider>,
