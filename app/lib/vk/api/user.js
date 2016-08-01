@@ -2,6 +2,7 @@
 
 import rp from 'request-promise';
 import config from '../../../../config';
+import User from '../../../records/user';
 
 /**
  * Builds GET request to VK api
@@ -18,6 +19,9 @@ const build_get_request = (apiMethod, query_params) => {
   };
 };
 
-const get = query_params => rp.get(build_get_request('users.get', query_params));
+const get = query_params => {
+  return rp.get(build_get_request('users.get', query_params))
+    .then(body => new User(body.response[0]));
+};
 
 export {build_get_request, get};
