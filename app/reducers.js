@@ -1,5 +1,6 @@
 import {routerReducer} from 'react-router-redux';
 import {combineReducers} from 'redux';
+import actions from './actions';
 
 
 /*
@@ -16,7 +17,7 @@ const user = (state, action) => {
 
 const photo_url = (state = '/images/photo_spinner.gif', action) => {
   switch (action.type) {
-    case 'GET_USER_RESOLVED':
+    case actions.types.GET_USER_RESOLVED:
       return action.user.response[0].photo_100;
     default:
       return state;

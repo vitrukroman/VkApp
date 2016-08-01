@@ -8,7 +8,8 @@
     "watch": "watchify app/index.js -o public/js/bundle.js -t babelify",
     "liveServer": "live-server public",
     "serve": "concurrently -p none 'npm run watch' 'npm run liveServer' 'corsproxy'",
-    "test": "karma start --single-run"
+    "test": "karma start --single-run",
+    "tdd": "karma start"
   },
   "repository": {
     "type": "git",

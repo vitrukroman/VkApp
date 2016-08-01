@@ -1,8 +1,9 @@
 'use strict';
 
-import {get_user} from '../index';
+import {get_user} from '../sagas';
 import {call, put} from 'redux-saga/effects';
 import {get as getUser} from '../../lib/vk/api/user';
+import actions from '../../actions';
 
 describe('Sagas', function () {
   describe('* get_user()', function () {
@@ -30,14 +31,14 @@ describe('Sagas', function () {
       };
 
       expect(this.generator.next(user).value)
-        .toEqual(put({type: 'GET_USER_RESOLVED', user}));
+        .toEqual(put(actions.get_user_resolved(user)));
     });
 
     it('rejects get_user', function () {
       const error = new Error('error happened');
 
       expect(this.generator.throw(error).value)
-        .toEqual(put({type: 'GET_USER_REJECTED', error}));
+        .toEqual(put(actions.get_user_rejected(error)));
 
     });
 
