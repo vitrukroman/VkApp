@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
-// import {Grid, Col, Row, Image, Nav, NavItem} from 'react-bootstrap';
+import {FormGroup, FormControl, Button} from 'react-bootstrap';
 
 class Search extends Component {
   render() {
     return (
-      <div>
-        ПОШУК
-      </div>
+      <FormGroup controlId='searchQuery'>
+        <FormControl inline/>
+        <Button bsStyle="primary" inline>Пошук</Button>
+      </FormGroup>
     );
   }
-};
+}
 
 export default Search;
 
