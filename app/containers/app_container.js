@@ -1,15 +1,11 @@
 'use strict';
 
 import {connect} from 'react-redux'
-import Layout from '../components/layout.jsx';
+import App from '../components/app.jsx';
 
 
-const LayoutContainer = connect(
-  state => {
-    return {
-      photo_url: state.photo_url
-    };
-  },
+const AppContainer = connect(
+  () => ({}),
   dispatch => {
     return {
       get_user() {
@@ -21,7 +17,7 @@ const LayoutContainer = connect(
       }
     };
   }
-)(Layout);
+)(App);
 
 
-export default LayoutContainer;
+export default AppContainer;
