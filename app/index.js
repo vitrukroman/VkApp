@@ -5,7 +5,7 @@ import store from './store';
 import App from './components/app'
 import {Router, Route, hashHistory} from 'react-router';
 import {syncHistoryWithStore} from 'react-router-redux';
-import Search from './components/search';
+import Search from './components/search.jsx';
 
 
 const history = syncHistoryWithStore(hashHistory, store);

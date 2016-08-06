@@ -1,7 +1,7 @@
 'use strict';
 
 import {connect} from 'react-redux'
-import Layout from '../components/layout';
+import Layout from '../components/layout.jsx';
 
 
 const LayoutContainer = connect(
