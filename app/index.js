@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
@@ -7,17 +9,37 @@ import {Router, Route, hashHistory} from 'react-router';
 import {syncHistoryWithStore} from 'react-router-redux';
 import Search from './components/search.jsx';
 import {parse} from 'qs';
-import {getAccessToken, setAccessToken} from './lib/vk/api/auth';
+import actions from './actions';
 
 
 const history = syncHistoryWithStore(hashHistory, store);
 
 const isAuthorized = (nextState, replace, callback) => {
+  if (!store.getState().access_token) {
+    const currentPath = nextState.location.pathname.replace(/\//g, 'slash');
+
+    location.href = [
+      'https://oauth.vk.com/authorize?',
+      'client_id=5514646&',
+      'display=popup&',
+      'redirect_uri=http://localhost:8080/&',
+      'scope=friends&',
+      'response_type=token&',
+      `state=${currentPath}`
+    ].join('');
+  } else {
+    callback();
+  }
+};
+
+const cacheAccessToken = (nextState, replace, callback) => {
   if (nextState.params.params) {
     const params = parse(nextState.params.params);
-    console.log(params);
-    replace('/');
+    store.dispatch(actions.access_token_resolved(params.access_token));
+    const refererPath = (params.state || '').replace(/slash/g, '/');
+    replace(refererPath);
   }
+
   callback();
 };
 
@@ -25,9 +47,9 @@ render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={AppContainer}>
-        <Route path="/search" component={Search}/>
+        <Route path="/search" component={Search} onEnter={isAuthorized}/>
       </Route>
-      <Route path="/:params" onEnter={isAuthorized}/>
+      <Route path="/:params" onEnter={cacheAccessToken} />
     </Router>
   </Provider>
   ,
