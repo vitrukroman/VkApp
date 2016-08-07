@@ -3,18 +3,7 @@
 import {routerReducer} from 'react-router-redux';
 import {combineReducers} from 'redux';
 import actions from '../actions';
-
-/*
- const user = (state, action) => {
- switch (action.type) {
- case 'GET_USER_RESOLVED':
- return action.user;
- default:
- return state;
- }
- };
- */
-
+import SearchCriteria from '../records/search_criteria';
 
 const photo_url = (state = '/images/photo_spinner.gif', action) => {
   switch (action.type) {
@@ -38,7 +27,7 @@ const access_token = (state = sessionStorage.getItem('access_token') || '', acti
 
 
 const found_users = (state = [], action) => {
-  switch(action.type) {
+  switch (action.type) {
     case actions.types.SEARCH_USERS_RESOLVED:
       console.log(action);
 
@@ -46,4 +35,20 @@ const found_users = (state = [], action) => {
   return state;
 };
 
-export default combineReducers({photo_url, routing: routerReducer, access_token, found_users});
+
+const search_criteria = (state = new SearchCriteria(), action) => {
+  switch (action.type) {
+    case actions.types.ACCESS_TOKEN_RESOLVED:
+      return state.set('access_token', action.access_token);
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  photo_url,
+  routing: routerReducer,
+  access_token,
+  found_users,
+  search_criteria
+});

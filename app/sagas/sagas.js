@@ -2,7 +2,7 @@
 
 import 'babel-polyfill';
 import {takeEvery} from 'redux-saga';
-import {call, put} from 'redux-saga/effects';
+import {call, put, select} from 'redux-saga/effects';
 import {get as getUser, search as searchUsers} from '../lib/vk/api/user';
 import actions from '../actions';
 
@@ -15,10 +15,13 @@ function* get_user(action) {
   }
 }
 
+export const get_query_params = state => state.search_criteria.toJS();
 
-function* search_users(action) {
+
+function* search_users() {
   try {
-    const users = yield call(searchUsers, action.query_params);
+    const query_params = yield select(get_query_params);
+    const users = yield call(searchUsers, query_params);
     yield put(actions.search_users_resolved(users));
   } catch (error) {
     console.error(error);
