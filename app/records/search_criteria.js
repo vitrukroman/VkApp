@@ -8,7 +8,7 @@ export default Record({
   city: 1057,
   country: 2,
   sex: 1,
-  age_from: 18,
+  age_from: 21,
   age_to: 22,
   online: 1,
   has_photo: 1,

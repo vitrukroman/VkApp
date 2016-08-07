@@ -21,8 +21,8 @@ export const get_query_params = state => state.search_criteria.toJS();
 function* search_users() {
   try {
     const query_params = yield select(get_query_params);
-    const users = yield call(searchUsers, query_params);
-    yield put(actions.search_users_resolved(users));
+    const data = yield call(searchUsers, query_params);
+    yield put(actions.search_users_resolved(data));
   } catch (error) {
     console.error(error);
     yield put(actions.search_users_rejected(error));

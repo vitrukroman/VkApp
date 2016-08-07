@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import AvatarContainer from '../containers/avatar_container';
-import Menu from './menu.jsx';
+import MenuContainer from '../containers/menu_container';
 
 const Layout = ({children}) => (
   <div className="container">
     <div className="row">
       <div className="col-md-2">
         <AvatarContainer />
-        <Menu />
+        <MenuContainer />
       </div>
 
       <div className="col-md-10">

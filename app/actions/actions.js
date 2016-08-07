@@ -44,9 +44,9 @@ const get_access_token = () => ({
   type: types.GET_ACCESS_TOKEN
 });
 
-const search_users_resolved = users => ({
+const search_users_resolved = data => ({
   type: types.SEARCH_USERS_RESOLVED,
-  users
+  data
 });
 
 

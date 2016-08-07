@@ -26,6 +26,15 @@ const get = query_params => {
 
 
 const search = query_params => rp.get(build_get_request('users.search', query_params))
-  .then(body => body);
+  .then(body => {
+    if (body.error) {
+      throw body.error;
+    }
+
+    return {
+      usersCount: body.response[0],
+      users: body.response.slice(1)
+    }
+  });
 
 export {build_get_request, get, search};
