@@ -1,5 +1,5 @@
 {
  "vk": {
-   "api": "http://localhost:1337/api.vk.com/"
+   "api": "http://localhost:1337/api.vk.com:443/"
  }
 }

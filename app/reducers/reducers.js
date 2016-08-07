@@ -36,4 +36,14 @@ const access_token = (state = sessionStorage.getItem('access_token') || '', acti
   }
 };
 
-export default combineReducers({photo_url, routing: routerReducer, access_token});
+
+const found_users = (state = [], action) => {
+  switch(action.type) {
+    case actions.types.SEARCH_USERS_RESOLVED:
+      console.log(action);
+
+  }
+  return state;
+};
+
+export default combineReducers({photo_url, routing: routerReducer, access_token, found_users});

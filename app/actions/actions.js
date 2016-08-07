@@ -6,7 +6,9 @@ const types = {
   GET_USER_RESOLVED: 'GET_USER_RESOLVED',
   GET_USER_REJECTED: 'GET_USER_REJECTED',
   GET_ACCESS_TOKEN: 'GET_ACCESS_TOKEN',
-  ACCESS_TOKEN_RESOLVED: 'ACCESS_TOKEN_RESOLVED'
+  ACCESS_TOKEN_RESOLVED: 'ACCESS_TOKEN_RESOLVED',
+  SEARCH_USERS_RESOLVED: 'SEARCH_USERS_RESOLVED',
+  SEARCH_USERS: 'SEARCH_USERS'
 };
 
 
@@ -42,6 +44,17 @@ const get_access_token = () => ({
   type: types.GET_ACCESS_TOKEN
 });
 
+const search_users_resolved = users => ({
+  type: types.SEARCH_USERS_RESOLVED,
+  users
+});
+
+
+const search_users = query_params => ({
+  type: types.SEARCH_USERS,
+  query_params
+});
+
 
 
 export default {
@@ -50,5 +63,7 @@ export default {
   get_user_resolved,
   get_user_rejected,
   get_access_token,
-  access_token_resolved
+  access_token_resolved,
+  search_users_resolved,
+  search_users
 };

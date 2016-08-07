@@ -7,7 +7,7 @@ import store from './store';
 import AppContainer from './containers/app_container';
 import {Router, Route, hashHistory} from 'react-router';
 import {syncHistoryWithStore} from 'react-router-redux';
-import Search from './components/search.jsx';
+import SearchContainer from './containers/search_container';
 import {parse} from 'qs';
 import actions from './actions';
 
@@ -47,7 +47,7 @@ render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={AppContainer}>
-        <Route path="/search" component={Search} onEnter={isAuthorized}/>
+        <Route path="/search" component={SearchContainer} onEnter={isAuthorized}/>
       </Route>
       <Route path="/:params" onEnter={cacheAccessToken} />
     </Router>

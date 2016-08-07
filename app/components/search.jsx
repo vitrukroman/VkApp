@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 
 class Search extends Component {
+  componentDidMount() {
+    this.props.search_users();
+  }
+
   render() {
+    console.log(this.props.found_users);
     return (
       <div className="container-fluid">
         <input type="email"
@@ -9,6 +14,7 @@ class Search extends Component {
                id="search_query"
                placeholder="Почніть вводити будь-яке імя"/>
         <div className="Row">
+          <div></div>
           <div className="col-md-3 col-md-offset-9">
             <div className="form-group">
               <div className="dropdown">

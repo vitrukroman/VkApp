@@ -24,4 +24,8 @@ const get = query_params => {
     .then(body => new User(body.response[0]));
 };
 
-export {build_get_request, get};
+
+const search = query_params => rp.get(build_get_request('users.search', query_params))
+  .then(body => body);
+
+export {build_get_request, get, search};
