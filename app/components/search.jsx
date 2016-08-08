@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {range} from 'lodash';
+import SearchSelectContainer from '../containers/search_select_container';
 
 
 class Search extends Component {
@@ -7,21 +8,26 @@ class Search extends Component {
     this.props.search_users();
   }
 
-
-  onBirthDayChange(event) {
-    this.props.change_birth_day(event.target.value);
-  }
-
-  onBirthMonthChange(event) {
-    this.props.change_birth_month(event.target.value);
-  }
-
   render() {
     console.log(this.props.found_users);
 
 
-    const birth_days = range(1, 32).map(i => <option key={i}>{i}</option>);
-    const birth_months = range(1, 13).map(i => <option key={i}>{i}</option>);
+    const birth_days = range(1, 32);
+    const birth_months = {
+      1: 'Cічень',
+      2: 'Лютий',
+      3: 'Березень',
+      4: 'Квітень',
+      5: 'Травень',
+      6: 'Червень',
+      7: 'Липень',
+      8: 'Серпень',
+      9: 'Вересень',
+      10: 'Жовтень',
+      11: 'Листопад',
+      12: 'Грудень',
+    };
+    const ages = range(15, 30);
     const users = this.props.found_users.map(user => {
       return (
         <div className="media" key={user.uid}>
@@ -57,16 +63,16 @@ class Search extends Component {
           <div className="col-md-3">
             <div className="form-group">
               <label>Дата народження</label>
-              <select className="form-control" onChange={e => this.onBirthDayChange(e)}>
-                <option></option>
-                {birth_days}
-              </select>
-              <label>Місяць народження</label>
+              <SearchSelectContainer search_key="birth_day" search_options={birth_days}/>
 
-              <select className="form-control" onChange={e => this.onBirthMonthChange(e)}>
-                <option></option>
-                {birth_months}
-              </select>
+              <label>Місяць народження</label>
+              <SearchSelectContainer search_key="birth_month" search_options={birth_months}/>
+
+              <label>Вік, від</label>
+              <SearchSelectContainer search_key="age_from" search_options={ages}/>
+
+              <label>Вік, до</label>
+              <SearchSelectContainer search_key="age_to" search_options={ages}/>
             </div>
           </div>
         </div>
