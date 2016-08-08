@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {range} from 'lodash';
+
 
 class Search extends Component {
   componentDidMount() {
@@ -10,13 +12,16 @@ class Search extends Component {
     this.props.change_birth_day(event.target.value);
   }
 
+  onBirthMonthChange(event) {
+    this.props.change_birth_month(event.target.value);
+  }
+
   render() {
     console.log(this.props.found_users);
 
 
-    const birth_days = [...Array(32)]
-      .map((_,i) => <option key={i}>{i}</option>)
-      .slice(1);
+    const birth_days = range(1, 32).map(i => <option key={i}>{i}</option>);
+    const birth_months = range(1, 13).map(i => <option key={i}>{i}</option>);
     const users = this.props.found_users.map(user => {
       return (
         <div className="media" key={user.uid}>
@@ -53,7 +58,14 @@ class Search extends Component {
             <div className="form-group">
               <label>Дата народження</label>
               <select className="form-control" onChange={e => this.onBirthDayChange(e)}>
+                <option></option>
                 {birth_days}
+              </select>
+              <label>Місяць народження</label>
+
+              <select className="form-control" onChange={e => this.onBirthMonthChange(e)}>
+                <option></option>
+                {birth_months}
               </select>
             </div>
           </div>

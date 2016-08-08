@@ -1,7 +1,7 @@
 'use strict';
 
 import 'babel-polyfill';
-import {takeEvery} from 'redux-saga';
+import {takeEvery, takeLatest} from 'redux-saga';
 import {call, put, select} from 'redux-saga/effects';
 import {get as getUser, search as searchUsers} from '../lib/vk/api/user';
 import actions from '../actions';
@@ -33,7 +33,7 @@ function* search_users() {
 function* saga() {
   yield [
     takeEvery(actions.types.GET_USER, get_user),
-    takeEvery(actions.types.SEARCH_USERS, search_users),
+    takeLatest(actions.types.SEARCH_USERS, search_users),
   ];
 }
 
