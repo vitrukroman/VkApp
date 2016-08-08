@@ -3,9 +3,11 @@
 import {routerReducer} from 'react-router-redux';
 import {combineReducers} from 'redux';
 import actions from '../actions';
-import SearchCriteria from '../records/search_criteria';
+import {Record} from 'immutable';
+import config from '../../config.json';
 
 
+const SearchCriteria = Record(config.search_criteria);
 const cached_access_token = sessionStorage.getItem('access_token') || '' ;
 
 const photo_url = (state = '/images/photo_spinner.gif', action) => {
@@ -53,6 +55,8 @@ const search_criteria = (state = new SearchCriteria({access_token: cached_access
   switch (action.type) {
     case actions.types.ACCESS_TOKEN_RESOLVED:
       return state.set('access_token', action.access_token);
+    case actions.types.CHANGE_SEARCH_CRITERIA:
+      return state.set(action.key, action.value);
     default:
       return state;
   }

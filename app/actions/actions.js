@@ -8,7 +8,8 @@ const types = {
   GET_ACCESS_TOKEN: 'GET_ACCESS_TOKEN',
   ACCESS_TOKEN_RESOLVED: 'ACCESS_TOKEN_RESOLVED',
   SEARCH_USERS_RESOLVED: 'SEARCH_USERS_RESOLVED',
-  SEARCH_USERS: 'SEARCH_USERS'
+  SEARCH_USERS: 'SEARCH_USERS',
+  CHANGE_SEARCH_CRITERIA: 'CHANGE_SEARCH_CRITERIA'
 };
 
 
@@ -35,7 +36,7 @@ const get_user_rejected = error => {
   }
 };
 
-const access_token_resolved = access_token  => ({
+const access_token_resolved = access_token => ({
   type: types.ACCESS_TOKEN_RESOLVED,
   access_token
 });
@@ -56,6 +57,12 @@ const search_users = query_params => ({
 });
 
 
+const change_search_criteria = (key, value) => ({
+  type: types.CHANGE_SEARCH_CRITERIA,
+  key,
+  value
+});
+
 
 export default {
   types,
@@ -65,5 +72,6 @@ export default {
   get_access_token,
   access_token_resolved,
   search_users_resolved,
-  search_users
+  search_users,
+  change_search_criteria
 };
