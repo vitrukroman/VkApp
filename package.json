@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "browserify app/index.js -o public/js/bundle.js -t babelify",
+    "build": "browserify app/isndex.js -o public/js/bundle.js -t babelify",
     "watch": "watchify app/index.js -o public/js/bundle.js -t babelify",
     "liveServer": "live-server public",
-    "serve": "concurrently -p none 'npm run watch' 'npm run liveServer' 'npm run corsProxy'",
+    "serve": "concurrently -p none 'npm run watch' 'npm run server' 'npm run liveServer' 'npm run corsProxy'",
     "test": "karma start --single-run",
     "tdd": "karma start",
-    "corsProxy": "node cors_proxy_server.js"
+    "corsProxy": "node cors_proxy_server.js",
+    "server": "node server"
   },
   "repository": {
     "type": "git",
@@ -50,7 +51,8 @@
     "redux": "^3.5.2",
     "redux-saga": "^0.11.0",
     "request-promise": "^4.0.2",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "webdriverio": "^4.2.5"
   },
   "pre-commit": "test"
 }
