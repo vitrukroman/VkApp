@@ -2,7 +2,7 @@
 
 import 'babel-polyfill';
 import {takeEvery, takeLatest} from 'redux-saga';
-import {call, put, select} from 'redux-saga/effects';
+import {call, put, select, fork} from 'redux-saga/effects';
 import {get as getUser, search as searchUsers} from '../lib/vk/api/user';
 import actions from '../actions';
 import rp from 'request-promise';
@@ -18,10 +18,29 @@ function* get_user(action) {
 
 export const get_query_params = state => state.search_criteria.toJS();
 
+const get_access_token = (function () {
+  let _token;
+
+  return function*() {
+    if (_token) {
+      return _token;
+    }
+
+    try {
+      var access_token = yield call(rp, 'http://localhost:1337/127.0.0.1:3000');
+      yield put(actions.access_token_resolved(access_token));
+      _token = access_token;
+      return _token;
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
+})();
 
 function* search_users() {
   try {
-    const access_token = yield call(rp, 'http://localhost:1337/127.0.0.1:3000');
+    const access_token = yield call(get_access_token);
     yield put(actions.access_token_resolved(access_token));
     const query_params = yield select(get_query_params);
     const data = yield call(searchUsers, query_params);
