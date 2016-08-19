@@ -8,6 +8,7 @@ import actions from '../actions';
 const SearchContainer = connect(
   state => ({
     found_users: state.found_users,
+    filtered_users: state.filtered_users,
     found_users_count: state.found_users_count
   }),
   dispatch => ({

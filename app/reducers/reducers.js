@@ -5,6 +5,7 @@ import {combineReducers} from 'redux';
 import actions from '../actions';
 import {Record} from 'immutable';
 import config from '../../config.json';
+import _ from 'lodash';
 
 
 const SearchCriteria = Record(config.search_criteria);
@@ -41,6 +42,21 @@ const found_users = (state = [], action) => {
 };
 
 
+const filtered_users = (state = [], action) => {
+  switch (action.type) {
+    case actions.types.SEARCH_USERS_RESOLVED:
+      return action.data.users.filter(user => _.chain(config.search_filters)
+        .keys()
+        .every(filterName => (
+          user[filterName] === config.search_filters[filterName]
+        ))
+        .value());
+    default:
+      return state;
+  }
+};
+
+
 const found_users_count = (state = 0, action) => {
   switch (action.type) {
     case actions.types.SEARCH_USERS_RESOLVED:
@@ -68,5 +84,6 @@ export default combineReducers({
   access_token,
   found_users,
   search_criteria,
-  found_users_count
+  found_users_count,
+  filtered_users
 });

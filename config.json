@@ -12,9 +12,19 @@
     "age_to": 24,
     "online": 1,
     "has_photo": 1,
-    "fields": ["photo_100", "sex"],
+    "fields": ["photo_100",
+      "can_send_friend_request", "can_write_private_message",
+      "followers_count", "friend_status", "has_photo",
+      "is_favorite", "is_friend"],
     "access_token": "",
     "birth_day": "",
     "birth_month": ""
+  },
+  "search_filters": {
+    "is_favorite": 0,
+    "is_friend": 0,
+    "friend_status": 0,
+    "can_send_friend_request": 1,
+    "can_write_private_message": 1
   }
 }

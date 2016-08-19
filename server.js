@@ -1,3 +1,5 @@
+'use strict';
+
 const http = require('http');
 var webdriverio = require('webdriverio');
 
@@ -25,6 +27,10 @@ client
   .submitForm('form')
   .getUrl()
   .then(url => token = url.match(/access_token=(\w+)/)[1])
+  .then(token => {
+    console.log(token);
+    return token;
+  })
   .end();
 
 

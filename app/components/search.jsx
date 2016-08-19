@@ -52,6 +52,7 @@ class Search extends Component {
             </li>
             <li className="list-group-item">
               <span className="badge">{this.props.found_users.length}</span>
+              <span className="badge">{this.props.filtered_users.length}</span>
               Показано
             </li>
           </ul>
