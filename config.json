@@ -26,5 +26,6 @@
     "friend_status": 0,
     "can_send_friend_request": 1,
     "can_write_private_message": 1
-  }
+  },
+  "photo_url_default": "/images/photo_spinner.gif"
 }

@@ -1,17 +1,16 @@
 'use strict';
 
+import _ from 'lodash';
 import {routerReducer} from 'react-router-redux';
 import {combineReducers} from 'redux';
 import actions from '../actions';
-import {Record} from 'immutable';
 import config from '../../config.json';
-import _ from 'lodash';
+import SearchCriteria from '../records/search_criteria';
 
 
-const SearchCriteria = Record(config.search_criteria);
 const cached_access_token = sessionStorage.getItem('access_token') || '' ;
 
-const photo_url = (state = '/images/photo_spinner.gif', action) => {
+const photo_url = (state = config.photo_url_default, action) => {
   switch (action.type) {
     case actions.types.GET_USER_RESOLVED:
       return action.user.photo_100;
@@ -76,6 +75,15 @@ const search_criteria = (state = new SearchCriteria({access_token: cached_access
     default:
       return state;
   }
+};
+
+export {
+  photo_url,
+  access_token,
+  found_users,
+  search_criteria,
+  found_users_count,
+  filtered_users
 };
 
 export default combineReducers({
