@@ -12,6 +12,10 @@ let token;
 var options = { desiredCapabilities: { browserName: 'phantomjs'}};
 var client = webdriverio.remote(options);
 
+if (!process.env.email || !process.env.pass) {
+  throw "Require credentials";
+}
+
 client
   .init()
   .url([
@@ -22,8 +26,8 @@ client
     'scope=wall&',
     'response_type=token&'
   ].join(''))
-  .setValue('input[name=email]', '')
-  .setValue('input[name=pass]', '')
+  .setValue('input[name=email]', process.env.email)
+  .setValue('input[name=pass]', process.env.pass)
   .submitForm('form')
   .getUrl()
   .then(url => token = url.match(/access_token=(\w+)/)[1])
