@@ -49,4 +49,18 @@ describe('actions', () => {
     expect(actions.get_user_rejected(error))
       .toEqual(expectedAction);
   });
+
+
+  it('should crate an action to change search criteria', () => {
+    const key = 'sex';
+    const value = 1;
+
+    const expectedAction = {
+      type: actions.types.CHANGE_SEARCH_CRITERIA,
+      key, value
+    };
+
+    expect(actions.change_search_criteria(key, value))
+      .toEqual(expectedAction);
+  });
 });
