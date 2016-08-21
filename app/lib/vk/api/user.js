@@ -33,7 +33,7 @@ const search = query_params => rp.get(build_get_request('users.search', query_pa
 
     return {
       usersCount: body.response[0],
-      users: body.response.slice(1)
+      users: body.response.slice(1).map(userData => new User(userData))
     }
   });
 

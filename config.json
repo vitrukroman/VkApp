@@ -27,5 +27,9 @@
     "can_send_friend_request": 1,
     "can_write_private_message": 1
   },
-  "photo_url_default": "/images/photo_spinner.gif"
+  "photo_url_default": "/images/photo_spinner.gif",
+  "main_user_criteria": {
+    "user_ids": 210700286,
+    "fields": ["photo_100", "sex"]
+  }
 }

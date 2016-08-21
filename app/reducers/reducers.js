@@ -9,6 +9,8 @@ import SearchCriteria from '../records/search_criteria';
 
 
 const cached_access_token = sessionStorage.getItem('access_token') || '' ;
+const search_criteria_default = new SearchCriteria(config.search_criteria);
+search_criteria_default.set('access_token', cached_access_token);
 
 const photo_url = (state = config.photo_url_default, action) => {
   switch (action.type) {
@@ -66,7 +68,7 @@ const found_users_count = (state = 0, action) => {
 
 };
 
-const search_criteria = (state = new SearchCriteria({access_token: cached_access_token}), action) => {
+const search_criteria = (state = search_criteria_default, action) => {
   switch (action.type) {
     case actions.types.ACCESS_TOKEN_RESOLVED:
       return state.set('access_token', action.access_token);

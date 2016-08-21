@@ -10,6 +10,11 @@ import config from '../../../config.json';
 import actions from '../../actions';
 import SearchCriteria from '../../records/search_criteria';
 
+const cached_access_token = sessionStorage.getItem('access_token') || '' ;
+const search_criteria_default = new SearchCriteria(config.search_criteria);
+search_criteria_default.set('access_token', cached_access_token);
+
+
 
 describe('photo_url()', function () {
   it('returns default photo_url state value ', function () {
@@ -117,10 +122,6 @@ describe('search_criteria()', function () {
   });
 
   it('returns default search_criteria state value ', function () {
-    const cached_access_token = sessionStorage.getItem('access_token') || '' ;
-    console.log(sessionStorage.getItem('access_token'));
-    const search_criteria_default = new SearchCriteria({access_token: cached_access_token});
-
     expect(search_criteria(undefined, {})).toEqual(search_criteria_default);
   });
 
