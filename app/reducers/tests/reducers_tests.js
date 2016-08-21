@@ -3,10 +3,12 @@
 import {
   photo_url,
   found_users_count,
-  access_token
+  access_token,
+  search_criteria
 } from '../reducers';
 import config from '../../../config.json';
 import actions from '../../actions';
+import SearchCriteria from '../../records/search_criteria';
 
 
 describe('photo_url()', function () {
@@ -56,6 +58,15 @@ describe('found_users_count()', function () {
 
 
 describe('access_token()', function () {
+  beforeEach(function () {
+    this.old_access_token =
+      sessionStorage.getItem('access_token') || '';
+  });
+
+  afterEach(function () {
+    sessionStorage.setItem('access_token', this.old_access_token);
+  });
+
   it('returns default access_token state value ', function () {
     const cached_access_token = sessionStorage.getItem('access_token') || '' ;
 
@@ -82,3 +93,56 @@ describe('access_token()', function () {
   });
 });
 
+
+describe('search_criteria()', function () {
+  beforeEach(function () {
+    this.search_criteria_old = new SearchCriteria({
+      "sort": 0,
+      "count": 240,
+      "city": 315,
+      "country": 1,
+      "sex": 1,
+      "age_from": 21,
+      "age_to": 23,
+      "online": 1,
+      "has_photo": 1,
+      "fields": ["photo_100",
+        "can_send_friend_request", "can_write_private_message",
+        "followers_count", "friend_status", "has_photo",
+        "is_favorite", "is_friend"],
+      "access_token": "6316ec0eba15",
+      "birth_day": 23,
+      "birth_month": 2
+    });
+  });
+
+  it('returns default search_criteria state value ', function () {
+    const cached_access_token = sessionStorage.getItem('access_token') || '' ;
+    console.log(sessionStorage.getItem('access_token'));
+    const search_criteria_default = new SearchCriteria({access_token: cached_access_token});
+
+    expect(search_criteria(undefined, {})).toEqual(search_criteria_default);
+  });
+
+  it('returns new search_criteria state value after changing search_criteria', function () {
+    const key = 'online';
+    const offline = 0;
+
+    const expected = this.search_criteria_old.set(key, offline);
+    expect(search_criteria(this.search_criteria_old, {
+      type: actions.types.CHANGE_SEARCH_CRITERIA,
+      key,
+      value: offline
+    })).toEqual(expected);
+  });
+
+  it('returns new search_criteria state value after access_token resolved', function () {
+    const access_token = "ff234dqwr3u76";
+
+    const expected = this.search_criteria_old.set('access_token', access_token);
+    expect(search_criteria(this.search_criteria_old, {
+      type: actions.types.ACCESS_TOKEN_RESOLVED,
+      access_token
+    })).toEqual(expected);
+  });
+});
