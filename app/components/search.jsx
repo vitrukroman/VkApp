@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {range} from 'lodash';
 import SearchSelectContainer from '../containers/search_select_container';
-
+import {days, months, ages} from '../constants';
 
 class Search extends Component {
   componentDidMount() {
@@ -10,24 +10,7 @@ class Search extends Component {
 
   render() {
     console.log(this.props.found_users);
-
-
-    const birth_days = range(1, 32);
-    const birth_months = {
-      1: 'Cічень',
-      2: 'Лютий',
-      3: 'Березень',
-      4: 'Квітень',
-      5: 'Травень',
-      6: 'Червень',
-      7: 'Липень',
-      8: 'Серпень',
-      9: 'Вересень',
-      10: 'Жовтень',
-      11: 'Листопад',
-      12: 'Грудень',
-    };
-    const ages = range(15, 30);
+    
     const users = this.props.found_users.map(user => {
       return (
         <div className="media" key={user.uid}>
@@ -64,10 +47,10 @@ class Search extends Component {
           <div className="col-md-3">
             <div className="form-group">
               <label>Дата народження</label>
-              <SearchSelectContainer search_key="birth_day" search_options={birth_days}/>
+              <SearchSelectContainer search_key="birth_day" search_options={days}/>
 
               <label>Місяць народження</label>
-              <SearchSelectContainer search_key="birth_month" search_options={birth_months}/>
+              <SearchSelectContainer search_key="birth_month" search_options={months}/>
 
               <label>Вік, від</label>
               <SearchSelectContainer search_key="age_from" search_options={ages}/>

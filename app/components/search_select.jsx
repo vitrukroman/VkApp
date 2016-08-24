@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {Component} from 'react';
-import {isArray, map} from 'lodash';
+import {map} from 'lodash';
 
 
 class SearchSelect extends Component {
@@ -9,19 +9,9 @@ class SearchSelect extends Component {
     this.props.on_change(this.props.search_key, event.target.value);
   }
 
-  getKey(key, addOne) {
-    if (addOne) {
-      return key + 1;
-    }
-
-    return key;
-  }
-
   render() {
-    const addOne = isArray(this.props.search_options);
     const options = map(this.props.search_options,
-      (value, key) => <option key={this.getKey(key, addOne)}
-                              value={this.getKey(key, addOne)}>{value}</option>
+      (value, key) => <option key={key} value={key}>{value}</option>
     );
     return (
       <select className="form-control" onChange={e => this.onChange(e)}>
