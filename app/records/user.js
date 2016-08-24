@@ -2,7 +2,7 @@
 
 import {Record} from 'immutable';
 
-export default Record({
+export default class User extends Record({
   uid: undefined,
   first_name: undefined,
   last_name: undefined,
@@ -14,5 +14,10 @@ export default Record({
   friend_status: undefined,
   has_photo: undefined,
   is_favorite: undefined,
-  is_friend: undefined
-});
+  is_friend: undefined,
+  photo_id: undefined
+}) {
+  getPhotoId() {
+    return this.photo_id.match(/_(\d+)/)[1];
+  }
+}

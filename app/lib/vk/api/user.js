@@ -37,4 +37,19 @@ const search = query_params => rp.get(build_get_request('users.search', query_pa
     }
   });
 
-export {build_get_request, get, search};
+
+const likeAdd = (user, access_token) => {
+  rp.get(build_get_request('likes.add', {
+      access_token,
+      owner_id: user.uid,
+      item_id: user.getPhotoId(),
+      type: 'photo'
+    }))
+    .then(body => {
+      if (body.error) {
+        throw body.error;
+      }
+    });
+};
+
+export {build_get_request, get, search, likeAdd};

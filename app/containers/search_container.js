@@ -14,6 +14,10 @@ const SearchContainer = connect(
   dispatch => ({
     search_users() {
       dispatch(actions.search_users());
+    },
+
+    like_add(user) {
+      dispatch(actions.like_add(user));
     }
   })
 )(Search);

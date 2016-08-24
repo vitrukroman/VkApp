@@ -1,6 +1,6 @@
 'use strict';
 
-import _ from 'lodash';
+import {chain} from 'lodash';
 import {routerReducer} from 'react-router-redux';
 import {combineReducers} from 'redux';
 import actions from '../actions';
@@ -46,10 +46,11 @@ const found_users = (state = [], action) => {
 const filtered_users = (state = [], action) => {
   switch (action.type) {
     case actions.types.SEARCH_USERS_RESOLVED:
-      return action.data.users.filter(user => _.chain(config.search_filters)
+      return action.data.users.filter(user => chain(config.search_filters)
         .keys()
         .every(filterName => (
-          user[filterName] === config.search_filters[filterName]
+          user[filterName] === config.search_filters[filterName] &&
+          user['photo_id'] !== undefined
         ))
         .value());
     default:

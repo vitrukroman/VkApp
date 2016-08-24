@@ -3,9 +3,12 @@
 import 'babel-polyfill';
 import {takeEvery, takeLatest} from 'redux-saga';
 import {call, put, select, fork} from 'redux-saga/effects';
-import {get as getUser, search as searchUsers} from '../lib/vk/api/user';
+import {get as getUser, search as searchUsers, likeAdd} from '../lib/vk/api/user';
 import actions from '../actions';
 import rp from 'request-promise';
+
+
+let _access_token;
 
 function* get_user(action) {
   try {
@@ -52,10 +55,23 @@ function* search_users() {
 }
 
 
+function* like_add(action) {
+  try {
+    yield call(likeAdd, action.user, _access_token);
+    yield put(actions.like_add_resolved());
+  } catch (error) {
+    yield put(actions.like_add_rejected(error));
+  }
+}
+
+
 function* saga() {
+  _access_token = yield select(state => state.access_token);
+
   yield [
     takeEvery(actions.types.GET_USER, get_user),
-    takeLatest(actions.types.SEARCH_USERS, search_users),
+    takeEvery(actions.types.LIKE_ADD, like_add),
+    takeLatest(actions.types.SEARCH_USERS, search_users)
   ];
 }
 

@@ -14,7 +14,7 @@ const SearchSelectContainer = connect(
       _value = !isNaN(_value) ? _value : undefined;
       dispatch(actions.change_search_criteria(key, _value));
       dispatch(actions.search_users());
-    },
+    }
   })
 )(SearchSelect);
 

@@ -9,8 +9,28 @@ const types = {
   ACCESS_TOKEN_RESOLVED: 'ACCESS_TOKEN_RESOLVED',
   SEARCH_USERS_RESOLVED: 'SEARCH_USERS_RESOLVED',
   SEARCH_USERS: 'SEARCH_USERS',
-  CHANGE_SEARCH_CRITERIA: 'CHANGE_SEARCH_CRITERIA'
+  CHANGE_SEARCH_CRITERIA: 'CHANGE_SEARCH_CRITERIA',
+  LIKE_ADD: 'LIKE_ADD',
+  LIKE_ADD_RESOLVED: 'LIKE_ADD_RESOLVED',
+  LIKE_ADD_REJECTED: 'LIKE_ADD_REJECTED'
 };
+
+
+const like_add = user => ({
+  type: types.LIKE_ADD,
+  user
+});
+
+
+const like_add_resolved = () => ({
+  type: types.LIKE_ADD_RESOLVED
+});
+
+
+const like_add_rejected = error => ({
+  type: types.LIKE_ADD_REJECTED,
+  error
+});
 
 
 const get_user = query_params => {
@@ -73,5 +93,8 @@ export default {
   access_token_resolved,
   search_users_resolved,
   search_users,
-  change_search_criteria
+  change_search_criteria,
+  like_add,
+  like_add_resolved,
+  like_add_rejected
 };

@@ -9,9 +9,9 @@ class Search extends Component {
   }
 
   render() {
-    console.log(this.props.found_users);
-    
-    const users = this.props.found_users.map(user => {
+    console.log(this.props.filtered_users.map (user => user.toJS()));
+
+    const users = this.props.filtered_users.map(user => {
       return (
         <div className="media" key={user.uid}>
           <div className="media-left">
@@ -20,6 +20,10 @@ class Search extends Component {
           </div>
           <div className="media-body">
             <a href={`https://vk.com/id${user.uid}`}>{`${user.first_name} ${user.last_name}`}</a>
+            <br />
+            <button type="button"
+                    onClick={() => this.props.like_add(user)}
+                    className="btn btn-info">Мені подобається</button>
           </div>
 
         </div>
