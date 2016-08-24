@@ -7,7 +7,8 @@ import {
   put,
   select,
   actionChannel,
-  take
+  take,
+  fork
 } from 'redux-saga/effects';
 import {get as getUser, search as searchUsers, likeAdd} from '../lib/vk/api/user';
 import actions from '../actions';
@@ -64,7 +65,6 @@ function* search_users() {
 function* like_add(user) {
   try {
     yield call(likeAdd, user, _access_token);
-    console.log('liked', user.first_name, user.last_name);
     yield put(actions.like_add_resolved());
   } catch (error) {
     yield put(actions.like_add_rejected(error));
@@ -75,11 +75,24 @@ function* handleLikesAddition() {
   const likesAddChannel = yield actionChannel(actions.types.LIKE_ADD);
 
   while(true) {
-    const action = yield take(likesAddChannel);
+    let action = yield take(likesAddChannel);
+    yield fork(like_add, action.user);
+    action = yield take([
+      actions.types.LIKE_ADD_RESOLVED,
+      actions.types.LIKE_ADD_REJECTED
+    ]);
+
     yield [
-      call(like_add, action.user),
+      action,
       call(delay, 1000)
     ];
+
+    if (action.type === actions.types.LIKE_ADD_REJECTED) {
+      console.log(action.error);
+      yield call(delay, 3000);
+    } else {
+      console.log('like');
+    }
   }
 }
 

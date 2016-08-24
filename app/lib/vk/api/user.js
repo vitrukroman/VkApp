@@ -38,8 +38,8 @@ const search = query_params => rp.get(build_get_request('users.search', query_pa
   });
 
 
-const likeAdd = (user, access_token) => {
-  rp.get(build_get_request('likes.add', {
+const likeAdd = (user, access_token) => new Promise(
+  (resolve, reject) => rp.get(build_get_request('likes.add', {
       access_token,
       owner_id: user.uid,
       item_id: user.getPhotoId(),
@@ -47,9 +47,12 @@ const likeAdd = (user, access_token) => {
     }))
     .then(body => {
       if (body.error) {
-        throw body.error;
+        reject(body.error);
+      } else {
+        resolve();
       }
-    });
-};
+    }, reject)
+);
+
 
 export {build_get_request, get, search, likeAdd};
