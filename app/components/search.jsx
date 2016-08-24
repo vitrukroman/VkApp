@@ -4,6 +4,11 @@ import SearchSelectContainer from '../containers/search_select_container';
 import {days, months, ages} from '../constants';
 
 class Search extends Component {
+  likeAll() {
+    this.props.filtered_users.forEach(
+      user => this.props.like_add(user));
+  }
+
   componentDidMount() {
     this.props.search_users();
   }
@@ -41,6 +46,11 @@ class Search extends Component {
               <span className="badge">{this.props.found_users.length}</span>
               <span className="badge">{this.props.filtered_users.length}</span>
               Показано
+            </li>
+            <li className="list-group-item">
+              <button type="button"
+                      onClick={() => this.likeAll()}
+                      className="btn btn-info">Мені подобається</button>
             </li>
           </ul>
         </div>

@@ -1,8 +1,14 @@
 'use strict';
 
 import 'babel-polyfill';
-import {takeEvery, takeLatest} from 'redux-saga';
-import {call, put, select, fork} from 'redux-saga/effects';
+import {takeEvery, takeLatest, delay} from 'redux-saga';
+import {
+  call,
+  put,
+  select,
+  actionChannel,
+  take
+} from 'redux-saga/effects';
 import {get as getUser, search as searchUsers, likeAdd} from '../lib/vk/api/user';
 import actions from '../actions';
 import rp from 'request-promise';
@@ -55,22 +61,34 @@ function* search_users() {
 }
 
 
-function* like_add(action) {
+function* like_add(user) {
   try {
-    yield call(likeAdd, action.user, _access_token);
+    yield call(likeAdd, user, _access_token);
+    console.log('liked', user.first_name, user.last_name);
     yield put(actions.like_add_resolved());
   } catch (error) {
     yield put(actions.like_add_rejected(error));
   }
 }
 
+function* handleLikesAddition() {
+  const likesAddChannel = yield actionChannel(actions.types.LIKE_ADD);
+
+  while(true) {
+    const action = yield take(likesAddChannel);
+    yield [
+      call(like_add, action.user),
+      call(delay, 1000)
+    ];
+  }
+}
 
 function* saga() {
   _access_token = yield select(state => state.access_token);
 
   yield [
     takeEvery(actions.types.GET_USER, get_user),
-    takeEvery(actions.types.LIKE_ADD, like_add),
+    call(handleLikesAddition),
     takeLatest(actions.types.SEARCH_USERS, search_users)
   ];
 }
