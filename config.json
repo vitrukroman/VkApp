@@ -2,6 +2,7 @@
  "vk": {
    "api": "http://localhost:1337/api.vk.com:443/"
  },
+  "server_endpoint": "http://localhost:1337/127.0.0.1:3000",
   "search_criteria": {
     "sort": 1,
     "count": 100,

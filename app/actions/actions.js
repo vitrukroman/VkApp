@@ -7,6 +7,7 @@ const types = {
   GET_USER_REJECTED: 'GET_USER_REJECTED',
   GET_ACCESS_TOKEN: 'GET_ACCESS_TOKEN',
   ACCESS_TOKEN_RESOLVED: 'ACCESS_TOKEN_RESOLVED',
+  ACCESS_TOKEN_REJECTED: 'ACCESS_TOKEN_REJECTED',
   SEARCH_USERS_RESOLVED: 'SEARCH_USERS_RESOLVED',
   SEARCH_USERS: 'SEARCH_USERS',
   CHANGE_SEARCH_CRITERIA: 'CHANGE_SEARCH_CRITERIA',
@@ -61,6 +62,11 @@ const access_token_resolved = access_token => ({
   access_token
 });
 
+const access_token_rejected = error => ({
+  type: types.ACCESS_TOKEN_REJECTED,
+  error
+});
+
 const get_access_token = () => ({
   type: types.GET_ACCESS_TOKEN
 });
@@ -91,6 +97,7 @@ export default {
   get_user_rejected,
   get_access_token,
   access_token_resolved,
+  access_token_rejected,
   search_users_resolved,
   search_users,
   change_search_criteria,

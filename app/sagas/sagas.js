@@ -13,7 +13,7 @@ import {
 import {get as getUser, search as searchUsers, likeAdd} from '../lib/vk/api/user';
 import actions from '../actions';
 import rp from 'request-promise';
-
+import config from '../../config.json';
 
 let _access_token;
 
@@ -31,32 +31,26 @@ export const get_query_params = state => state.search_criteria.toJS();
 const get_access_token = (function () {
   let _token;
 
-  return function*() {
-    if (_token) {
-      return _token;
+  return function* (reset = false) {
+    if (!_token || reset) {
+      try {
+        _token = yield call(rp, config.server_endpoint);
+      } catch (err) {
+        yield put(actions.access_token_rejected(err));
+      }
     }
 
-    try {
-      var access_token = yield call(rp, 'http://localhost:1337/127.0.0.1:3000');
-      yield put(actions.access_token_resolved(access_token));
-      _token = access_token;
-      return _token;
-    }
-    catch (err) {
-      console.error(err);
-    }
+    yield put(actions.access_token_resolved(_token));
   };
 })();
 
 function* search_users() {
   try {
-    const access_token = yield call(get_access_token);
-    yield put(actions.access_token_resolved(access_token));
+    yield call(get_access_token);
     const query_params = yield select(get_query_params);
     const data = yield call(searchUsers, query_params);
     yield put(actions.search_users_resolved(data));
   } catch (error) {
-    console.error(error);
     yield put(actions.search_users_rejected(error));
   }
 }
@@ -107,5 +101,5 @@ function* saga() {
 }
 
 
-export {get_user};
+export {get_user, get_access_token};
 export default saga;
