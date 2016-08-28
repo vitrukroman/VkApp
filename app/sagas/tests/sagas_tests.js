@@ -1,12 +1,17 @@
 'use strict';
 
 
-import {get_user, get_access_token} from '../sagas';
-import {call, put} from 'redux-saga/effects';
-import {get as getUser} from '../../lib/vk/api/user';
+import {get_user, get_access_token, search_users,
+  select_search_criteria, select_access_token} from '../sagas';
+import {call, put, take} from 'redux-saga/effects';
+import {get as getUser, search as searchUsers} from '../../lib/vk/api/user';
 import actions from '../../actions';
 import rp from 'request-promise';
 import config from '../../../config.json';
+import SearchCriteria from '../../records/search_criteria';
+
+
+
 
 describe('Sagas', function () {
   describe('* get_user()', function () {
@@ -15,11 +20,14 @@ describe('Sagas', function () {
         fields = ['photo_100', 'sex'],
         query_params = {user_ids, fields};
 
-      this.action = {query_params};
-      this.generator = get_user(this.action);
+      const action = {query_params};
+      this.generator = get_user();
 
       expect(this.generator.next().value)
-        .toEqual(call(getUser, this.action.query_params));
+        .toEqual(take(actions.types.GET_USER));
+
+      expect(this.generator.next(action).value)
+        .toEqual(call(getUser, action.query_params));
     });
 
     it('resolves get_user', function () {
@@ -72,7 +80,30 @@ describe('Sagas', function () {
       this.generator.next(access_token);
 
       const generator = get_access_token();
+
       expect(generator.next().value)
+        .toEqual(select_access_token);
+      
+      expect(generator.next(access_token).value)
+        .toEqual(put(actions.access_token_resolved(access_token)));
+    });
+
+
+    it('do request for new token if token was not cached in state', function () {
+      this.generator.next();
+
+      const access_token = '0993458934jrh78h834fh46fh3hf3782fh7348hf38';
+      this.generator.next(access_token);
+
+      const generator = get_access_token();
+
+      expect(generator.next().value)
+        .toEqual(select_access_token);
+
+      expect(generator.next('').value)
+        .toEqual(call(rp, config.server_endpoint));
+
+      expect(generator.next(access_token).value)
         .toEqual(put(actions.access_token_resolved(access_token)));
     });
 
@@ -84,6 +115,25 @@ describe('Sagas', function () {
       const error = new Error('Error getting access_token');
       expect(this.generator.throw(error).value)
         .toEqual(put(actions.access_token_rejected(error)));
+    });
+  });
+
+  describe('* search users()', function () {
+    beforeEach(function () {
+      this.generator = search_users();
+
+      expect(this.generator.next().value)
+        .toEqual(select_search_criteria);
+      
+      const search_criteria = new SearchCriteria(config.search_criteria);
+      
+      expect(this.generator.next(search_criteria).value)
+        .toEqual(call(searchUsers, search_criteria));
+    });
+
+    
+    it('resolved found users', function () {
+
     });
   });
 });

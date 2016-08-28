@@ -25,10 +25,10 @@ const get = query_params => {
 };
 
 
-const search = query_params => rp.get(build_get_request('users.search', query_params))
+const search = query_params => rp.get(build_get_request('users.search', query_params.toJS()))
   .then(body => {
-    if (body.error) {
-      throw body.error;
+    if (body.error) { 
+      throw body.error;;
     }
 
     return {
