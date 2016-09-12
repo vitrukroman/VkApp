@@ -13,6 +13,11 @@ class Search extends Component {
     this.props.search_users();
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.captcha_handled(this.refs.captcha_input.value);
+  }
+
   render() {
     console.log(this.props.filtered_users.map (user => user.toJS()));
 
@@ -34,6 +39,7 @@ class Search extends Component {
         </div>
       );
     });
+
     return (
       <div className="container-fluid">
         <div className="row">
@@ -50,8 +56,10 @@ class Search extends Component {
             <li className="list-group-item">
               <button type="button"
                       onClick={() => this.likeAll()}
-                      className="btn btn-info">Мені подобається</button>
+                      className="btn btn-info">Мені подобається
+              </button>
             </li>
+            {this.captcha_dialog()}
           </ul>
         </div>
         <div className="row">
@@ -76,6 +84,19 @@ class Search extends Component {
         </div>
       </div>
     );
+  }
+
+
+  captcha_dialog() {
+    return this.props.captcha.is_active ? <li className="list-group-item">
+      <form onSubmit={e => this.onSubmit(e)}>
+        <img src={this.props.captcha.image_url} />
+        <input ref="captcha_input" />
+        <button type="submit"
+                className="btn btn-info">Далі
+        </button>
+      </form>
+    </li> : '';
   }
 }
 

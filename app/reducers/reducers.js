@@ -6,6 +6,7 @@ import {combineReducers} from 'redux';
 import actions from '../actions';
 import config from '../../config.json';
 import SearchCriteria from '../records/search_criteria';
+import Captcha from '../records/captcha';
 
 
 const cached_access_token = sessionStorage.getItem('access_token') || '' ;
@@ -80,13 +81,34 @@ const search_criteria = (state = search_criteria_default, action) => {
   }
 };
 
+
+const captcha = (state = new Captcha(), action) => {
+  switch(action.type) {
+    case actions.types.LAUNCH_CAPTCHA:
+      return state
+        .set('is_active', true)
+        .set('sid', action.sid)
+        .set('image_url', action.image_url);
+    case actions.types.CAPTCHA_HANDLED:
+      return state
+        .set('key', action.key);
+    case actions.types.DEACTIVATE_CAPTCHA:
+      return state
+        .set('is_active', false);
+    default:
+      return state;
+  }
+};
+
+
 export {
   photo_url,
   access_token,
   found_users,
   search_criteria,
   found_users_count,
-  filtered_users
+  filtered_users,
+  captcha
 };
 
 export default combineReducers({
@@ -96,5 +118,6 @@ export default combineReducers({
   found_users,
   search_criteria,
   found_users_count,
-  filtered_users
+  filtered_users,
+  captcha
 });

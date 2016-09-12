@@ -18,6 +18,7 @@ import config from '../../config.json';
 
 const select_search_criteria = select(state => state.search_criteria);
 const select_access_token = select(state => state.access_token);
+const select_captcha = select(state => state.captcha);
 
 
 function* get_user() {
@@ -58,7 +59,11 @@ function* search_users() {
 function* like_add(user) {
   try {
     const access_token = yield select_access_token;
-    yield call(likeAdd, user, access_token);
+    const captcha = yield select_captcha;
+    yield captcha.is_active ?
+      call(likeAdd, user, access_token, captcha):
+      call(likeAdd, user, access_token);
+    yield put(actions.deactivate_captcha());
     yield put(actions.like_add_resolved());
   } catch (error) {
     yield put(actions.like_add_rejected(error));
@@ -69,9 +74,9 @@ function* handleLikesAddition() {
   const likesAddChannel = yield actionChannel(actions.types.LIKE_ADD);
 
   while(true) {
-    let action = yield take(likesAddChannel);
-    yield fork(like_add, action.user);
-    action = yield take([
+    let likeAction = yield take(likesAddChannel);
+    yield fork(like_add, likeAction.user);
+    let action = yield take([
       actions.types.LIKE_ADD_RESOLVED,
       actions.types.LIKE_ADD_REJECTED
     ]);
@@ -82,12 +87,17 @@ function* handleLikesAddition() {
     ];
 
     if (action.type === actions.types.LIKE_ADD_REJECTED) {
-      console.log(action.error);
-      yield call(delay, 5000);
+      yield call(handleCaptcha, action.error.captcha_sid, action.error.captcha_img);
+      yield put(likeAction);
     } else {
       console.log('like');
     }
   }
+}
+
+function* handleCaptcha(captcha_sid, captcha_img) {
+  yield put(actions.launch_captcha(captcha_sid, captcha_img));
+  yield take(actions.types.CAPTCHA_HANDLED);
 }
 
 function* saga() {

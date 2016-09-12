@@ -13,7 +13,10 @@ const types = {
   CHANGE_SEARCH_CRITERIA: 'CHANGE_SEARCH_CRITERIA',
   LIKE_ADD: 'LIKE_ADD',
   LIKE_ADD_RESOLVED: 'LIKE_ADD_RESOLVED',
-  LIKE_ADD_REJECTED: 'LIKE_ADD_REJECTED'
+  LIKE_ADD_REJECTED: 'LIKE_ADD_REJECTED',
+  LAUNCH_CAPTCHA: 'LAUNCH_CAPTCHA',
+  CAPTCHA_HANDLED: 'CAPTCHA_HANDLED',
+  DEACTIVATE_CAPTCHA: 'DEACTIVATE_CAPTCHA'
 };
 
 
@@ -90,6 +93,21 @@ const change_search_criteria = (key, value) => ({
 });
 
 
+const launch_captcha = (captcha_sid, captcha_img) => ({
+  type: types.LAUNCH_CAPTCHA,
+  sid: captcha_sid,
+  image_url: captcha_img
+});
+
+const captcha_handled = (captha_key) => ({
+  type: types.CAPTCHA_HANDLED,
+  key: captha_key
+});
+
+const deactivate_captcha = () => ({
+  type: types.DEACTIVATE_CAPTCHA
+});
+
 export default {
   types,
   get_user,
@@ -103,5 +121,8 @@ export default {
   change_search_criteria,
   like_add,
   like_add_resolved,
-  like_add_rejected
+  like_add_rejected,
+  launch_captcha,
+  captcha_handled,
+  deactivate_captcha
 };

@@ -38,12 +38,14 @@ const search = query_params => rp.get(build_get_request('users.search', query_pa
   });
 
 
-const likeAdd = (user, access_token) => new Promise(
+const likeAdd = (user, access_token, captcha = {}) => new Promise(
   (resolve, reject) => rp.get(build_get_request('likes.add', {
       access_token,
       owner_id: user.uid,
       item_id: user.getPhotoId(),
-      type: 'photo'
+      type: 'photo',
+      captcha_sid: captcha.sid,
+      captcha_key: captcha.key
     }))
     .then(body => {
       if (body.error) {

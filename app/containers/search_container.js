@@ -9,7 +9,8 @@ const SearchContainer = connect(
   state => ({
     found_users: state.found_users,
     filtered_users: state.filtered_users,
-    found_users_count: state.found_users_count
+    found_users_count: state.found_users_count,
+    captcha: state.captcha
   }),
   dispatch => ({
     search_users() {
@@ -18,6 +19,10 @@ const SearchContainer = connect(
 
     like_add(user) {
       dispatch(actions.like_add(user));
+    },
+    
+    captcha_handled(captcha_key) {
+      dispatch(actions.captcha_handled(captcha_key));
     }
   })
 )(Search);
