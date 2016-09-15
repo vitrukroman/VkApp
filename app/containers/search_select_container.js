@@ -6,7 +6,9 @@ import actions from '../actions';
 import {isNaN} from 'lodash';
 
 const SearchSelectContainer = connect(
-  () => ({}),
+  state => ({
+    search_criteria: state.search_criteria
+  }),
 
   dispatch => ({
     on_change(key, value) {

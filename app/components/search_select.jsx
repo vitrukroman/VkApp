@@ -14,7 +14,9 @@ class SearchSelect extends Component {
       (value, key) => <option key={key} value={key}>{value}</option>
     );
     return (
-      <select className="form-control" onChange={e => this.onChange(e)}>
+      <select className="form-control"
+              onChange={e => this.onChange(e)}
+              value={this.props.search_criteria[this.props.search_key]}>
         <option />
         {options}
       </select>
