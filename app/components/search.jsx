@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
-import {range} from 'lodash';
-import SearchSelectContainer from '../containers/search_select_container';
-import {days, months, ages} from '../constants';
+import React, { Component } from 'react';
+import { range } from 'lodash';
 import CaptchaContainer from '../containers/captcha_container';
-
+import SearchCriteriaContainer from '../containers/search_criteria_container';
+import PersonContainer from '../containers/person_container';
 
 class Search extends Component {
   likeAll() {
@@ -16,36 +15,7 @@ class Search extends Component {
   }
 
 
-  captcha() {
-    return this.props.captcha.is_active ?
-      <li className="list-group’-item">
-        <CaptchaContainer />
-      </li> : '';
-  }
-
   render() {
-    console.log(this.props.filtered_users.map(user => user.toJS()));
-
-    const users = this.props.filtered_users.map(user => {
-      return (
-        <div className="media" key={user.uid}>
-          <div className="media-left">
-            <img src={user.photo_100} className="img-rounded">
-            </img>
-          </div>
-          <div className="media-body">
-            <a href={`https://vk.com/id${user.uid}`}>{`${user.first_name} ${user.last_name}`}</a>
-            <br />
-            <button type="button"
-                    onClick={() => this.props.like_add(user)}
-                    className="btn btn-info">Мені подобається
-            </button>
-          </div>
-
-        </div>
-      );
-    });
-
     return (
       <div className="container-fluid">
         <div className="row">
@@ -65,27 +35,18 @@ class Search extends Component {
                       className="btn btn-info">Мені подобається
               </button>
             </li>
-            {this.captcha()}
+            {this.props.captcha.is_active ?
+              <li className="list-group-item">
+                <CaptchaContainer />
+              </li> : ''}
           </ul>
         </div>
         <div className="row">
           <div className="col-md-9">
-            {users}
+            {this.props.filtered_users.map(user => <PersonContainer user={user} key={user.uid}/>)}
           </div>
           <div className="col-md-3">
-            <div className="form-group">
-              <label>Дата народження</label>
-              <SearchSelectContainer search_key="birth_day" search_options={days}/>
-
-              <label>Місяць народження</label>
-              <SearchSelectContainer search_key="birth_month" search_options={months}/>
-
-              <label>Вік, від</label>
-              <SearchSelectContainer search_key="age_from" search_options={ages}/>
-
-              <label>Вік, до</label>
-              <SearchSelectContainer search_key="age_to" search_options={ages}/>
-            </div>
+            <SearchCriteriaContainer />
           </div>
         </div>
       </div>
