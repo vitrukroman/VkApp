@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {range} from 'lodash';
 import SearchSelectContainer from '../containers/search_select_container';
 import {days, months, ages} from '../constants';
+import CaptchaContainer from '../containers/captcha_container';
+
 
 class Search extends Component {
   likeAll() {
@@ -13,13 +15,16 @@ class Search extends Component {
     this.props.search_users();
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-    this.props.captcha_handled(this.refs.captcha_input.value);
+
+  captcha() {
+    return this.props.captcha.is_active ?
+      <li className="list-group’-item">
+        <CaptchaContainer />
+      </li> : '';
   }
 
   render() {
-    console.log(this.props.filtered_users.map (user => user.toJS()));
+    console.log(this.props.filtered_users.map(user => user.toJS()));
 
     const users = this.props.filtered_users.map(user => {
       return (
@@ -33,7 +38,8 @@ class Search extends Component {
             <br />
             <button type="button"
                     onClick={() => this.props.like_add(user)}
-                    className="btn btn-info">Мені подобається</button>
+                    className="btn btn-info">Мені подобається
+            </button>
           </div>
 
         </div>
@@ -59,7 +65,7 @@ class Search extends Component {
                       className="btn btn-info">Мені подобається
               </button>
             </li>
-            {this.captcha_dialog()}
+            {this.captcha()}
           </ul>
         </div>
         <div className="row">
@@ -84,19 +90,6 @@ class Search extends Component {
         </div>
       </div>
     );
-  }
-
-
-  captcha_dialog() {
-    return this.props.captcha.is_active ? <li className="list-group-item">
-      <form onSubmit={e => this.onSubmit(e)}>
-        <img src={this.props.captcha.image_url} />
-        <input ref="captcha_input" />
-        <button type="submit"
-                className="btn btn-info">Далі
-        </button>
-      </form>
-    </li> : '';
   }
 }
 

@@ -19,10 +19,6 @@ const SearchContainer = connect(
 
     like_add(user) {
       dispatch(actions.like_add(user));
-    },
-    
-    captcha_handled(captcha_key) {
-      dispatch(actions.captcha_handled(captcha_key));
     }
   })
 )(Search);
