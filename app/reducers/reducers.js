@@ -10,7 +10,15 @@ import Captcha from '../records/captcha';
 
 
 const cached_access_token = sessionStorage.getItem('access_token') || '' ;
-const search_criteria_default = new SearchCriteria(config.search_criteria);
+let cached_search_criteria = localStorage.getItem('search_criteria');
+try {
+  cached_search_criteria = JSON.parse(cached_search_criteria);
+}
+catch(error) {
+  cached_search_criteria = null;
+}
+
+const search_criteria_default = new SearchCriteria(cached_search_criteria || config.search_criteria);
 search_criteria_default.set('access_token', cached_access_token);
 
 const photo_url = (state = config.photo_url_default, action) => {
@@ -71,14 +79,20 @@ const found_users_count = (state = 0, action) => {
 };
 
 const search_criteria = (state = search_criteria_default, action) => {
+  let newState = state;
+
   switch (action.type) {
     case actions.types.ACCESS_TOKEN_RESOLVED:
-      return state.set('access_token', action.access_token);
+      newState = state.set('access_token', action.access_token);
+      break;
     case actions.types.CHANGE_SEARCH_CRITERIA:
-      return state.set(action.key, action.value);
-    default:
-      return state;
+      newState = state.set(action.key, action.value);
+      break;
   }
+
+  newState !== state && localStorage.setItem('search_criteria', JSON.stringify(newState.toJS()));
+
+  return newState;
 };
 
 
