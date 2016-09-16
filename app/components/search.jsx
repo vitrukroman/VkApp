@@ -25,8 +25,8 @@ class Search extends Component {
               Всього
             </li>
             <li className="list-group-item">
-              <span className="badge">{this.props.found_users.length}</span>
-              <span className="badge">{this.props.filtered_users.length}</span>
+              <span className="badge">{this.props.found_users.size}</span>
+              <span className="badge">{this.props.filtered_users.size}</span>
               Показано
             </li>
             <li className="list-group-item">

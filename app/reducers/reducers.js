@@ -7,6 +7,7 @@ import actions from '../actions';
 import config from '../../config.json';
 import SearchCriteria from '../records/search_criteria';
 import Captcha from '../records/captcha';
+import {Set} from 'immutable';
 
 
 const cached_access_token = sessionStorage.getItem('access_token') || '' ;
@@ -42,7 +43,7 @@ const access_token = (state = cached_access_token, action) => {
 };
 
 
-const found_users = (state = [], action) => {
+const found_users = (state = new Set(), action) => {
   switch (action.type) {
     case actions.types.SEARCH_USERS_RESOLVED:
       return action.data.users;
@@ -52,7 +53,7 @@ const found_users = (state = [], action) => {
 };
 
 
-const filtered_users = (state = [], action) => {
+const filtered_users = (state = new Set(), action) => {
   switch (action.type) {
     case actions.types.SEARCH_USERS_RESOLVED:
       return action.data.users.filter(user => chain(config.search_filters)

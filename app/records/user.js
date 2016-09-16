@@ -15,7 +15,8 @@ export default class User extends Record({
   has_photo: undefined,
   is_favorite: undefined,
   is_friend: undefined,
-  photo_id: undefined
+  photo_id: undefined,
+  blacklisted_by_me: undefined
 }) {
   getPhotoId() {
     return this.photo_id.match(/_(\d+)/)[1];

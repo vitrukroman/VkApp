@@ -48,10 +48,27 @@ function* get_access_token(reset = false) {
 function* search_users() {
   try {
     const query_params = yield select_search_criteria;
-    const data = yield call(searchUsers, query_params);
-    yield put(actions.search_users_resolved(data));
+    const searchUserCalls = spreadCalls(query_params);
+    const data = yield searchUserCalls;
+
+    yield put(actions.search_users_resolved(chooseUsers(data)));
   } catch (error) {
     yield put(actions.search_users_rejected(error));
+  }
+
+
+  function spreadCalls(query_params) {
+    return query_params.status !== 8 ?
+      [call(searchUsers, query_params)]:
+      ['', 1, 2, 3, 4, 5, 6, 7].map(status => call(searchUsers, query_params.set('status', status)));
+  }
+
+
+  function chooseUsers(data) {
+    return data.slice(1).reduce((summaryData, currentData) => ({
+      usersCount: summaryData.usersCount - currentData.usersCount,
+      users: summaryData.users.subtract(currentData.users)
+    }), Object.assign({}, data[0]));
   }
 }
 

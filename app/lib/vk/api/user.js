@@ -3,6 +3,7 @@
 import rp from 'request-promise';
 import config from '../../../../config';
 import User from '../../../records/user';
+import {Set} from 'immutable';
 
 /**
  * Builds GET request to VK api
@@ -33,7 +34,7 @@ const search = query_params => rp.get(build_get_request('users.search', query_pa
 
     return {
       usersCount: body.response[0],
-      users: body.response.slice(1).map(userData => new User(userData))
+      users: new Set(body.response.slice(1).map(userData => new User(userData)))
     }
   });
 
