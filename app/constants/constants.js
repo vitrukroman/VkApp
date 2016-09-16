@@ -19,6 +19,24 @@ const months = {
 };
 const ages = keyBy(range(15, 30));
 
+const sort_types = {
+  0: 'По популярності',
+  1: 'По даті реєстрації'
+};
+
+const statuses = {
+  1: 'Незаміжня',
+  2: 'Зустрічається',
+  3: 'Заручена',
+  4: 'Заміжня',
+  5: 'Все складно',
+  6: 'В активному пошуку',
+  7: 'Закохана',
+  8: 'Без статусу'
+};
+
+const birth_years = keyBy(range(1900, 2017));
+
 export {
-  days, months, ages
+  days, months, ages, sort_types, statuses, birth_years
 }

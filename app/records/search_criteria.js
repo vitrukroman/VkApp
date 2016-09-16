@@ -15,5 +15,7 @@ export default Record({
   "fields": undefined,
   "access_token": undefined,
   "birth_day": undefined,
-  "birth_month": undefined
+  "birth_month": undefined,
+  "birth_year": undefined,
+  "status": undefined
 });

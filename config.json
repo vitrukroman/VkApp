@@ -16,17 +16,19 @@
     "fields": ["photo_100",
       "can_send_friend_request", "can_write_private_message",
       "followers_count", "friend_status", "has_photo",
-      "is_favorite", "is_friend", "photo_id"],
+      "is_favorite", "is_friend", "photo_id", "blacklisted_by_me"],
     "access_token": "",
     "birth_day": "",
-    "birth_month": ""
+    "birth_month": "",
+    "status": ""
   },
   "search_filters": {
     "is_favorite": 0,
     "is_friend": 0,
     "friend_status": 0,
     "can_send_friend_request": 1,
-    "can_write_private_message": 1
+    "can_write_private_message": 1,
+    "blacklisted_by_me": 0
   },
   "photo_url_default": "/images/photo_spinner.gif",
   "main_user_criteria": {
