@@ -4,16 +4,12 @@ import {
   photo_url,
   found_users_count,
   access_token,
-  search_criteria
+  search_criteria,
+  getSearchCriteriaDefault
 } from '../reducers';
 import config from '../../../config.json';
 import actions from '../../actions';
 import SearchCriteria from '../../records/search_criteria';
-
-const cached_access_token = sessionStorage.getItem('access_token') || '' ;
-const search_criteria_default = new SearchCriteria(config.search_criteria);
-search_criteria_default.set('access_token', cached_access_token);
-
 
 
 describe('photo_url()', function () {
@@ -119,10 +115,12 @@ describe('search_criteria()', function () {
       "birth_day": 23,
       "birth_month": 2
     });
+
+    localStorage.removeItem('search_criteria');
   });
 
   it('returns default search_criteria state value ', function () {
-    expect(search_criteria(undefined, {})).toEqual(search_criteria_default);
+    expect(search_criteria(undefined, {})).toEqual(getSearchCriteriaDefault());
   });
 
   it('returns new search_criteria state value after changing search_criteria', function () {

@@ -11,16 +11,22 @@ import {Set} from 'immutable';
 
 
 const cached_access_token = sessionStorage.getItem('access_token') || '' ;
-let cached_search_criteria = localStorage.getItem('search_criteria');
-try {
-  cached_search_criteria = JSON.parse(cached_search_criteria);
-}
-catch(error) {
-  cached_search_criteria = null;
-}
 
-const search_criteria_default = new SearchCriteria(cached_search_criteria || config.search_criteria);
-search_criteria_default.set('access_token', cached_access_token);
+
+function getSearchCriteriaDefault() {
+  let cached_search_criteria = localStorage.getItem('search_criteria');
+  try {
+    cached_search_criteria = JSON.parse(cached_search_criteria);
+  }
+  catch (error) {
+    cached_search_criteria = null;
+  }
+
+  const search_criteria_default = new SearchCriteria(cached_search_criteria || config.search_criteria);
+  search_criteria_default.set('access_token', cached_access_token);
+
+  return search_criteria_default;
+}
 
 const photo_url = (state = config.photo_url_default, action) => {
   switch (action.type) {
@@ -79,7 +85,7 @@ const found_users_count = (state = 0, action) => {
 
 };
 
-const search_criteria = (state = search_criteria_default, action) => {
+const search_criteria = (state = getSearchCriteriaDefault(), action) => {
   let newState = state;
 
   switch (action.type) {
@@ -123,7 +129,8 @@ export {
   search_criteria,
   found_users_count,
   filtered_users,
-  captcha
+  captcha,
+  getSearchCriteriaDefault
 };
 
 export default combineReducers({
