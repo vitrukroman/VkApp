@@ -128,7 +128,7 @@ describe('Sagas', function () {
       const search_criteria = new SearchCriteria(config.search_criteria);
       
       expect(this.generator.next(search_criteria).value)
-        .toEqual(call(searchUsers, search_criteria));
+        .toEqual([call(searchUsers, search_criteria)]);
     });
 
     
