@@ -1,16 +1,16 @@
-'use strict';
+
 
 import 'babel-polyfill';
-import {takeLatest, delay} from 'redux-saga';
+import { takeLatest, delay } from 'redux-saga';
 import {
   call,
   put,
   select,
   actionChannel,
   take,
-  fork
+  fork,
 } from 'redux-saga/effects';
-import {get as getUser, search as searchUsers, likeAdd} from '../lib/vk/api/user';
+import { get as getUser, search as searchUsers, likeAdd } from '../lib/vk/api/user';
 import actions from '../actions';
 import rp from 'request-promise';
 import config from '../../config.json';
@@ -59,7 +59,7 @@ function* search_users() {
 
   function spreadCalls(query_params) {
     return query_params.status !== 8 ?
-      [call(searchUsers, query_params)]:
+      [call(searchUsers, query_params)] :
       ['', 1, 2, 3, 4, 5, 6, 7].map(status => call(searchUsers, query_params.set('status', status)));
   }
 
@@ -67,7 +67,7 @@ function* search_users() {
   function chooseUsers(data) {
     return data.slice(1).reduce((summaryData, currentData) => ({
       usersCount: summaryData.usersCount - currentData.usersCount,
-      users: summaryData.users.subtract(currentData.users)
+      users: summaryData.users.subtract(currentData.users),
     }), Object.assign({}, data[0]));
   }
 }
@@ -78,7 +78,7 @@ function* like_add(user) {
     const access_token = yield select_access_token;
     const captcha = yield select_captcha;
     yield captcha.is_active ?
-      call(likeAdd, user, access_token, captcha):
+      call(likeAdd, user, access_token, captcha) :
       call(likeAdd, user, access_token);
     yield put(actions.deactivate_captcha());
     yield put(actions.like_add_resolved());
@@ -90,17 +90,17 @@ function* like_add(user) {
 function* handleLikesAddition() {
   const likesAddChannel = yield actionChannel(actions.types.LIKE_ADD);
 
-  while(true) {
-    let likeAction = yield take(likesAddChannel);
+  while (true) {
+    const likeAction = yield take(likesAddChannel);
     yield fork(like_add, likeAction.user);
-    let action = yield take([
+    const action = yield take([
       actions.types.LIKE_ADD_RESOLVED,
-      actions.types.LIKE_ADD_REJECTED
+      actions.types.LIKE_ADD_REJECTED,
     ]);
 
     yield [
       action,
-      call(delay, 1000)
+      call(delay, 1000),
     ];
 
     if (action.type === actions.types.LIKE_ADD_REJECTED) {
@@ -120,16 +120,16 @@ function* handleCaptcha(captcha_sid, captcha_img) {
 function* saga() {
   yield [
     call(get_user),
-    call(get_access_token)
+    call(get_access_token),
   ];
 
   yield [
     call(handleLikesAddition),
-    takeLatest(actions.types.SEARCH_USERS, search_users)
+    takeLatest(actions.types.SEARCH_USERS, search_users),
   ];
 }
 
 
-export {get_user, get_access_token, search_users,
-  select_search_criteria, select_access_token};
+export { get_user, get_access_token, search_users,
+  select_search_criteria, select_access_token };
 export default saga;

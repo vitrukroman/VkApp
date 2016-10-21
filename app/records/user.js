@@ -1,6 +1,6 @@
-'use strict';
 
-import {Record} from 'immutable';
+
+import { Record } from 'immutable';
 
 export default class User extends Record({
   uid: undefined,
@@ -16,7 +16,7 @@ export default class User extends Record({
   is_favorite: undefined,
   is_friend: undefined,
   photo_id: undefined,
-  blacklisted_by_me: undefined
+  blacklisted_by_me: undefined,
 }) {
   getPhotoId() {
     return this.photo_id.match(/_(\d+)/)[1];

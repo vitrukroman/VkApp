@@ -1,13 +1,13 @@
-'use strict';
 
-import {connect} from 'react-redux'
+
+import { connect } from 'react-redux';
 import Avatar from '../components/avatar.jsx';
 
 
 const AvatarContainer = connect(
-  state => {
+  (state) => {
     return {
-      photo_url: state.photo_url
+      photo_url: state.photo_url,
     };
   }
 )(Avatar);

@@ -1,26 +1,23 @@
-'use strict';
 
 
-import {get_user, get_access_token, search_users,
-  select_search_criteria, select_access_token} from '../sagas';
-import {call, put, take} from 'redux-saga/effects';
-import {get as getUser, search as searchUsers} from '../../lib/vk/api/user';
+import { get_user, get_access_token, search_users,
+  select_search_criteria, select_access_token } from '../sagas';
+import { call, put, take } from 'redux-saga/effects';
+import { get as getUser, search as searchUsers } from '../../lib/vk/api/user';
 import actions from '../../actions';
 import rp from 'request-promise';
 import config from '../../../config.json';
 import SearchCriteria from '../../records/search_criteria';
 
 
-
-
-describe('Sagas', function () {
-  describe('* get_user()', function () {
+describe('Sagas', () => {
+  describe('* get_user()', () => {
     beforeEach(function () {
       const user_ids = 210700286,
         fields = ['photo_100', 'sex'],
-        query_params = {user_ids, fields};
+        query_params = { user_ids, fields };
 
-      const action = {query_params};
+      const action = { query_params };
       this.generator = get_user();
 
       expect(this.generator.next().value)
@@ -32,13 +29,13 @@ describe('Sagas', function () {
 
     it('resolves get_user', function () {
       const user = {
-        "response": [{
-          "uid": 210700286,
-          "first_name": "Lindsey",
-          "last_name": "Stirling",
-          "sex": 1,
-          "photo_100": "http://cs631329.vk.me/v631329286/23f6d/yV0LrfbdgWk.jpg"
-        }]
+        response: [{
+          uid: 210700286,
+          first_name: 'Lindsey',
+          last_name: 'Stirling',
+          sex: 1,
+          photo_100: 'http://cs631329.vk.me/v631329286/23f6d/yV0LrfbdgWk.jpg',
+        }],
       };
 
       expect(this.generator.next(user).value)
@@ -50,15 +47,14 @@ describe('Sagas', function () {
 
       expect(this.generator.throw(error).value)
         .toEqual(put(actions.get_user_rejected(error)));
-
     });
 
     afterEach(function () {
       expect(this.generator.next().done).toEqual(true);
-    })
+    });
   });
-  
-  describe('* get_access_token()', function () {
+
+  describe('* get_access_token()', () => {
     beforeEach(function () {
       this.generator = get_access_token(true);
     });
@@ -83,7 +79,7 @@ describe('Sagas', function () {
 
       expect(generator.next().value)
         .toEqual(select_access_token);
-      
+
       expect(generator.next(access_token).value)
         .toEqual(put(actions.access_token_resolved(access_token)));
     });
@@ -118,21 +114,21 @@ describe('Sagas', function () {
     });
   });
 
-  describe('* search users()', function () {
+  describe('* search users()', () => {
     beforeEach(function () {
       this.generator = search_users();
 
       expect(this.generator.next().value)
         .toEqual(select_search_criteria);
-      
+
       const search_criteria = new SearchCriteria(config.search_criteria);
-      
+
       expect(this.generator.next(search_criteria).value)
         .toEqual([call(searchUsers, search_criteria)]);
     });
 
-    
-    it('resolved found users', function () {
+
+    it('resolved found users', () => {
 
     });
   });

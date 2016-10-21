@@ -1,13 +1,13 @@
-'use strict';
 
-import {connect} from 'react-redux'
+
+import { connect } from 'react-redux';
 import SearchSelect from '../components/search_select.jsx';
 import actions from '../actions';
-import {isNaN} from 'lodash';
+import { isNaN } from 'lodash';
 
 const SearchSelectContainer = connect(
   state => ({
-    search_criteria: state.search_criteria
+    search_criteria: state.search_criteria,
   }),
 
   dispatch => ({
@@ -16,7 +16,7 @@ const SearchSelectContainer = connect(
       _value = !isNaN(_value) ? _value : undefined;
       dispatch(actions.change_search_criteria(key, _value));
       dispatch(actions.search_users());
-    }
+    },
   })
 )(SearchSelect);
 
