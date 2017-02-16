@@ -1,44 +1,47 @@
 'use strict';
 
 const http = require('http');
-var webdriverio = require('webdriverio');
 
 const hostname = '127.0.0.1';
 const port = 3000;
 
+var Horseman = require('node-horseman');
+var horseman = new Horseman();
 
 let token;
-
-var options = { desiredCapabilities: { browserName: 'chrome'}};
-var client = webdriverio.remote(options);
 
 if (!process.env.email || !process.env.pass) {
   throw "Require credentials";
 }
 
-client
-  .init()
-  .url([
+horseman
+  .userAgent('Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0')
+  .open([
     'https://oauth.vk.com/authorize?',
     'client_id=5585106&',
     'display=mobile&',
     'redirect_uri=https://oauth.vk.com/blank.html&',
-    'scope=139264&',
+    'scope=wall&',
     'response_type=token&'
   ].join(''))
-  .setValue('input[name=email]', process.env.email)
-  .setValue('input[name=pass]', process.env.pass)
-  .submitForm('form')
-  .getUrl()
+  .waitForSelector('input[type=submit]')
+  .waitForSelector('input[name=email]')
+  .type('input[name=email]', process.env.email)
+  .type('input[name=pass]', process.env.pass)
+  .waitForSelector('input[type=submit]')
+  .click('input[type=submit]')
+  .waitForNextPage()
+  .url()
   .then(url => {
-	console.log('url', url);
-	return token = url.match(/access_token=(\w+)/)[1];
-	})
-  .then(token => {
-    console.log(token);
-    return token;
-  }, e => console.error(e))
-  .end();
+    console.log('url', url);
+    const matches = url.match(/access_token=(\w+)/);
+    if (matches) {
+      token = matches[1];
+      console.log('token', token);
+    }
+
+    horseman.close();
+  }, e => console.error(e));
 
 
 const server = http.createServer((req, res) => {
