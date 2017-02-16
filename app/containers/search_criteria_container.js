@@ -1,8 +1,8 @@
-'use strict';
 
-import {connect} from 'react-redux'
+
+import { connect } from 'react-redux';
 import SearchCriteria from '../components/search_criteria.jsx';
-import {days, months, ages, sort_types, statuses, birth_years} from '../constants';
+import { days, months, ages, sort_types, statuses, birth_years } from '../constants';
 
 
 const SearchCriteriaContainer = connect(
@@ -12,7 +12,7 @@ const SearchCriteriaContainer = connect(
     ages,
     sort_types,
     statuses,
-    birth_years
+    birth_years,
   })
 )(SearchCriteria);
 

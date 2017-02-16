@@ -1,6 +1,6 @@
-'use strict';
 
-import {connect} from 'react-redux'
+
+import { connect } from 'react-redux';
 import Search from '../components/search.jsx';
 import actions from '../actions';
 
@@ -10,7 +10,7 @@ const SearchContainer = connect(
     found_users: state.found_users,
     filtered_users: state.filtered_users,
     found_users_count: state.found_users_count,
-    captcha: state.captcha
+    captcha: state.captcha,
   }),
   dispatch => ({
     search_users() {
@@ -19,7 +19,7 @@ const SearchContainer = connect(
 
     like_add(user) {
       dispatch(actions.like_add(user));
-    }
+    },
   })
 )(Search);
 

@@ -1,4 +1,3 @@
-'use strict';
 
 
 const types = {
@@ -16,96 +15,96 @@ const types = {
   LIKE_ADD_REJECTED: 'LIKE_ADD_REJECTED',
   LAUNCH_CAPTCHA: 'LAUNCH_CAPTCHA',
   CAPTCHA_HANDLED: 'CAPTCHA_HANDLED',
-  DEACTIVATE_CAPTCHA: 'DEACTIVATE_CAPTCHA'
+  DEACTIVATE_CAPTCHA: 'DEACTIVATE_CAPTCHA',
 };
 
 
 const like_add = user => ({
   type: types.LIKE_ADD,
-  user
+  user,
 });
 
 
 const like_add_resolved = () => ({
-  type: types.LIKE_ADD_RESOLVED
+  type: types.LIKE_ADD_RESOLVED,
 });
 
 
 const like_add_rejected = error => ({
   type: types.LIKE_ADD_REJECTED,
-  error
+  error,
 });
 
 
-const get_user = query_params => {
+const get_user = (query_params) => {
   return {
     type: types.GET_USER,
-    query_params
-  }
+    query_params,
+  };
 };
 
 
-const get_user_resolved = user => {
+const get_user_resolved = (user) => {
   return {
     type: types.GET_USER_RESOLVED,
-    user
-  }
+    user,
+  };
 };
 
 
-const get_user_rejected = error => {
+const get_user_rejected = (error) => {
   return {
     type: types.GET_USER_REJECTED,
-    error
-  }
+    error,
+  };
 };
 
 const access_token_resolved = access_token => ({
   type: types.ACCESS_TOKEN_RESOLVED,
-  access_token
+  access_token,
 });
 
 const access_token_rejected = error => ({
   type: types.ACCESS_TOKEN_REJECTED,
-  error
+  error,
 });
 
 const get_access_token = () => ({
-  type: types.GET_ACCESS_TOKEN
+  type: types.GET_ACCESS_TOKEN,
 });
 
 const search_users_resolved = data => ({
   type: types.SEARCH_USERS_RESOLVED,
-  data
+  data,
 });
 
 
 const search_users = query_params => ({
   type: types.SEARCH_USERS,
-  query_params
+  query_params,
 });
 
 
 const change_search_criteria = (key, value) => ({
   type: types.CHANGE_SEARCH_CRITERIA,
   key,
-  value
+  value,
 });
 
 
 const launch_captcha = (captcha_sid, captcha_img) => ({
   type: types.LAUNCH_CAPTCHA,
   sid: captcha_sid,
-  image_url: captcha_img
+  image_url: captcha_img,
 });
 
-const captcha_handled = (captha_key) => ({
+const captcha_handled = captha_key => ({
   type: types.CAPTCHA_HANDLED,
-  key: captha_key
+  key: captha_key,
 });
 
 const deactivate_captcha = () => ({
-  type: types.DEACTIVATE_CAPTCHA
+  type: types.DEACTIVATE_CAPTCHA,
 });
 
 export default {
@@ -124,5 +123,5 @@ export default {
   like_add_rejected,
   launch_captcha,
   captcha_handled,
-  deactivate_captcha
+  deactivate_captcha,
 };

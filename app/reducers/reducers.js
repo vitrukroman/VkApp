@@ -1,16 +1,16 @@
-'use strict';
 
-import {chain} from 'lodash';
-import {routerReducer} from 'react-router-redux';
-import {combineReducers} from 'redux';
+
+import { chain } from 'lodash';
+import { routerReducer } from 'react-router-redux';
+import { combineReducers } from 'redux';
 import actions from '../actions';
 import config from '../../config.json';
 import SearchCriteria from '../records/search_criteria';
 import Captcha from '../records/captcha';
-import {Set} from 'immutable';
+import { Set } from 'immutable';
 
 
-const cached_access_token = sessionStorage.getItem('access_token') || '' ;
+const cached_access_token = sessionStorage.getItem('access_token') || '';
 
 
 function getSearchCriteriaDefault() {
@@ -66,7 +66,7 @@ const filtered_users = (state = new Set(), action) => {
         .keys()
         .every(filterName => (
           user[filterName] === config.search_filters[filterName] &&
-          user['photo_id'] !== undefined
+          user.photo_id !== undefined
         ))
         .value());
     default:
@@ -82,7 +82,6 @@ const found_users_count = (state = 0, action) => {
     default:
       return state;
   }
-
 };
 
 const search_criteria = (state = getSearchCriteriaDefault(), action) => {
@@ -104,7 +103,7 @@ const search_criteria = (state = getSearchCriteriaDefault(), action) => {
 
 
 const captcha = (state = new Captcha(), action) => {
-  switch(action.type) {
+  switch (action.type) {
     case actions.types.LAUNCH_CAPTCHA:
       return state
         .set('is_active', true)
@@ -130,7 +129,7 @@ export {
   found_users_count,
   filtered_users,
   captcha,
-  getSearchCriteriaDefault
+  getSearchCriteriaDefault,
 };
 
 export default combineReducers({
@@ -141,5 +140,5 @@ export default combineReducers({
   search_criteria,
   found_users_count,
   filtered_users,
-  captcha
+  captcha,
 });
