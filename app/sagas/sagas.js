@@ -10,6 +10,7 @@ import {
   take,
   fork
 } from 'redux-saga/effects';
+import { buffers } from 'redux-saga';
 import {get as getUser, search as searchUsers, likeAdd} from '../lib/vk/api/user';
 import actions from '../actions';
 import rp from 'request-promise';
@@ -88,7 +89,7 @@ function* like_add(user) {
 }
 
 function* handleLikesAddition() {
-  const likesAddChannel = yield actionChannel(actions.types.LIKE_ADD);
+  const likesAddChannel = yield actionChannel(actions.types.LIKE_ADD, buffers.fixed(100));
 
   while(true) {
     let likeAction = yield take(likesAddChannel);

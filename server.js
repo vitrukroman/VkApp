@@ -9,7 +9,7 @@ const port = 3000;
 
 let token;
 
-var options = { desiredCapabilities: { browserName: 'phantomjs'}};
+var options = { desiredCapabilities: { browserName: 'chrome'}};
 var client = webdriverio.remote(options);
 
 if (!process.env.email || !process.env.pass) {
@@ -23,18 +23,21 @@ client
     'client_id=5585106&',
     'display=mobile&',
     'redirect_uri=https://oauth.vk.com/blank.html&',
-    'scope=wall&',
+    'scope=139264&',
     'response_type=token&'
   ].join(''))
   .setValue('input[name=email]', process.env.email)
   .setValue('input[name=pass]', process.env.pass)
   .submitForm('form')
   .getUrl()
-  .then(url => token = url.match(/access_token=(\w+)/)[1])
+  .then(url => {
+	console.log('url', url);
+	return token = url.match(/access_token=(\w+)/)[1];
+	})
   .then(token => {
     console.log(token);
     return token;
-  })
+  }, e => console.error(e))
   .end();
 
 
